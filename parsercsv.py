@@ -7,7 +7,7 @@ file_name = sys.argv[1]
 orig_stdout = sys.stdout
 f = open(file_name + '.json', 'w')
 sys.stdout = f
-csv_file = open(file_name + '.csv', 'r')
+csv_file = open(file_name, 'r')
 
 objects = csv_file.readlines()
 objects_len = len(objects)
@@ -66,5 +66,4 @@ for i in range(len(objects)):
 print(']')
 
 csv_file.close()
-sys.stdout = orig_stdout
 f.close()

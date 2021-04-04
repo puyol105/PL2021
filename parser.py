@@ -4,8 +4,10 @@ import sys
 import re
 import functools
 
-file = open('teste.csv', 'r')
-out = open('out.json', 'w')
+file_name = sys.argv[1]
+
+file = open(file_name + '.csv', 'r')
+out = open(file_name + '.json', 'w')
 sys.stdout = out
 
 def gen_reduce(listaStr, value):
@@ -29,21 +31,22 @@ def gen_reduce(listaStr, value):
 pattern = ';|\n'
 rows = re.split(pattern, file.readline())
 lines = file.readlines()
+lines[len(lines)-1] = lines[len(lines)-1] + "\n"
 
 print('[')
 for index, line in enumerate(lines):
-    print('  {')  #print('index: ', str(index), 'line: ', line)
+    print('  {')
     values = re.split(pattern, line)
     for i in range(len(values)-1):
-      result = re.match(r'(\w+)(\*)?(sum|avg|max|min){0,1}', rows[i])
-      if result.group(3):
+      if result := re.match(r'(\w+)(\*)(sum|avg|max|min)', rows[i]):
         field = gen_reduce(values[i], result.group(3))
-        print(f"    \"{result.group(1)}_{result.group(3)}\" : {field} ", end='')
-      elif result.group(2):
+        print(f"    \"{result.group(1)}_{result.group(3)}\": {field} ", end='')
+      elif result := re.match(r'(\w+)(\*)$', rows[i]):
         field = re.sub(r'[()]','', values[i])
-        print(f"    \"{rows[i]}\" : [{field}]", end='')
-      elif result.group(1):
-        print(f"    \"{rows[i]}\" : \"{values[i]}\"", end='')
+        r = re.sub('[*]','',rows[i])
+        print(f"    \"{r}\": [{field}]", end='')
+      else:
+        print(f"    \"{rows[i]}\": \"{values[i]}\"", end='')
       if(i<(len(values)-2)):
         print(',')
       else:
