@@ -29,7 +29,7 @@ g = '''
         Atribuicao : AtrVar
                    | AtrArray
         
-        AtrVar : id '=' ExpA
+        AtrVar : id '=' ExpA 
 
         AtrArray : id [ number ] '=' ExpA
         
@@ -39,23 +39,27 @@ g = '''
 
         (bottom up -> coisas com mais prioridade ficam mais a baixo/direita)
         
-        Cond : Cond OR Cond2
-             | Cond2
+        Condicao : ExpLogOr 
         
-        Cond2: Cond2 AND Cond3
-             | Cond3
-        
-        Cond3 : NOT Cond
-             | ExpRel
-        
-          X?  ExpRel : Exp '>'Exp'
-          X     ...
-          X     | Exp
-        
-          X | ExpA                   Aritmetica
-          X | ExpL  AND OR NOT       Logica
-          X | ExpR                   Relacional
+        ExpLogOr : ExpLogAnd
+                 | ExpLogOr OR ExpLogAnd
 
+        ExpLogAnd : ExpLogNot
+                  | ExpLogAnd AND ExpLogOr
+            
+        ExpLogNot : ExpEq
+                  | !            X
+        
+        ExpEq : ExpRel
+              | ExpEq EQ ExpRel
+              | ExpEq NE ExpRel
+        
+        ExpRel : ExpA
+              | ExpRel '>' ExpA
+              | ExpRel '<' ExpA
+              | ExpRel '>=' ExpA
+              | ExpRel '<=' ExpA 
+         
         ExpA : ExpA '+' Term
              | ExpA '-' Term
              | Term
@@ -66,16 +70,26 @@ g = '''
              | Factor
         
         Factor : id
-               | number"
+               | number
                | '(' ExpA ')'
                | id [ number ]
+               | True
+               | False
+     
+        X Cond : Cond OR Cond2
+        X     | Cond2
         
-        Condicao: ExpRel
-
-        ExpRel : ExpA
-               | ExpRel '>' ExpA
-               | ExpRel '<' ExpA
-               | ExpRel '>=' ExpA
-               | ExpRel '<=' ExpA
-
+        X Cond2: Cond2 AND Cond3
+        X     | Cond3
+        
+        X Cond3 : NOT Cond
+        X     | ExpRel
+        
+          X?  ExpRel : Exp '>'Exp'
+          X     ...
+          X     | Exp
+        
+          X | ExpA                   Aritmetica
+          X | ExpL  AND OR NOT       Logica
+          X | ExpR                   Relacional
     '''

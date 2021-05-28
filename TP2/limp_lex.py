@@ -25,15 +25,48 @@ reserved = {
 }
 
 tokens = [
-    'number', 'id', 'BEGIN', 'MI', 'ME', 
+    'number', 'id', 'BEGIN', 'EQ', 'NE', 'GE', 'LE', 'AND', 'NOT', 'OR', 'TRUE', 'FALSE',
  ] + list(reserved.values())
 
 # Literals
-literals = ['+', '-', '*', '/', '(', ')', '{', '}', '?', '!', ';', '=', '[', ']', '&', '|', '!', '>', '<']
+literals = ['+', '-', '*', '/', '(', ')', '{', '}', '?', ';', '=', '[', ']', '>', '<']
 t_BEGIN = r'BEGIN'
-t_MI = r'>='
-t_ME = r'<='
+
 # A regular expression rule with some action code
+def t_EQ(t):
+    r'=='
+    print('lexer: encontrei ==')
+    return t
+
+def t_NE(t):
+    r'!='
+    print('lexer: encontrei !=')
+    return t
+
+def t_GE(t):
+    r'>='
+    print('lexer: encontrei >=')
+    return t
+
+def t_LE(t):
+    r'<='
+    print('lexer: encontrei <=')
+    return t
+
+def t_AND(t):
+    r'&&'
+    print('lexer: encontrei &&')
+    return t
+
+def t_OR(t):
+    r'\|\|'
+    print('lexer: encontrei ||')
+    return t
+
+def t_NOT(t):
+    r'!'
+    print('lexer: encontrei !')
+    return t
 
 def t_id(t):
     r'[a-z]+'
@@ -50,9 +83,17 @@ def t_number(t):
     t.lexer.num_count += 1
     return t
 
+def t_TRUE(t):
+    r'True'
+    print('lexer: encontrei True')
+    return t
+
+def t_FALSE(t):
+    r'False'
+    print('lexer: encontrei False')
+    return t
 
 
- 
 #----------------------------------------
 # Define a rule so we can track line numbers
 def t_newline(t):
@@ -82,4 +123,6 @@ def t_error(t):
 # Build the lexer
 lexer = lex.lex()
 lexer.num_count = 0
+
+
  

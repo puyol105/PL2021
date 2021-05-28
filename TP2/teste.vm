@@ -1,2 +1,3 @@
 int a=3; int b=3; int c=2; int d=4; int e[5]; BEGIN e[2]=33; if(e[2]>b){print e[2]; if(b>c){print 3;}}else{print 4;}print c; 
-PUSHI 3  PUSHI 3  PUSHI 2  PUSHI 4  PUSHN 5 START  PUSHGP PUSHI 4 PADD PUSHI 2 PUSHI 33 STOREN   PUSHGP PUSHI 4 PADD PUSHI 2 LOADN  PUSHG 1 SUP  JZ else1 PUSHGP PUSHI 4 PADD PUSHI 2 LOADN  WRITEI   PUSHG 1 PUSHG 2 SUP  JZ fimif0 PUSHI 3 WRITEI fimif0: JUMP fimif1 else1: PUSHI 4 WRITEI fimif1:  PUSHG 2 WRITEI  STOP
+int a=5; BEGIN if(2>3 || a>2*2){print 1;}print 2;
+int a=1; int b[5]; int c=10; int d=15; BEGIN b[1]=1; b[2]=2; if(b[2]>c || 2>1){print 1;}else{print 2;}print c;                                                        

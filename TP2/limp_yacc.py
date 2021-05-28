@@ -166,9 +166,54 @@ def p_Condicional_if_else(p):
     p[0]= p[3] + ' JZ ' + label_else + p[6] + ' JUMP ' + label_fim + ' ' + label_else + ':' + p[10] + label_fim + ':'
 
 def p_Condicao(p):
-    "Condicao : ExpRel"
-    print('condicao')
+    "Condicao : ExpLogOr"
+    print('Condicao : ExpLogOr')
     p[0]=p[1]
+
+def p_ExpLogOr(p):
+    "ExpLogOr : ExpLogAnd"
+    print('ExpLogOr : ExpLogAnd')
+    p[0]=p[1]
+
+def p_ExpLogOr_or(p):
+    "ExpLogOr : ExpLogOr OR ExpLogAnd"
+    print('ExpLogOr : ExpLogOr OR ExpLogAnd')
+    p[0] = p[1] + p[3] + ' ADD ' + p[1] + p[3] + ' MUL SUB '
+
+def p_ExpLogAnd(p):
+    "ExpLogAnd : ExpLogNot"
+    print('ExpLogAnd : ExpLogNot')
+    p[0]=p[1]
+
+def p_ExpLogAnd_and(p):
+    "ExpLogAnd : ExpLogAnd AND ExpLogOr"
+    print('ExpLogAnd : ExpLogAnd AND ExpLogOr')
+    p[0] = p[1] + ' ' + p[3]
+
+def p_ExpLogNot(p):
+    "ExpLogNot : ExpEq"
+    print('ExpLog : ExpEq')
+    p[0] = p[1]
+
+def p_ExpLogNot_not(p):
+    "ExpLogNot : NOT Condicao"
+    print('ExpLog : NOT Condicao')
+    p[0] = p[2] + ' NOT '
+
+def p_ExpEq(p):
+    "ExpEq : ExpRel"
+    print('ExpEq : ExpRel')
+    p[0] = p[1]
+
+def p_ExpEq_eq(p):
+    "ExpEq : ExpEq EQ ExpRel"
+    print('ExpEq : ExpEq EQ ExpRel')
+    p[0] = p[1] + p[3] + ' EQUAL '
+
+def p_ExpEq_ne(p):
+    "ExpEq : ExpEq NE ExpRel"
+    print('ExpEq : ExpEq NE ExpRel')
+    p[0] = p[1] + p[3] + ' EQUAL NOT '
 
 def p_ExpRel(p):
     "ExpRel : ExpA"
@@ -185,15 +230,15 @@ def p_ExpRel_l(p):
     print('ExpRel : ExpRel > ExpA')
     p[0] = p[1] + p[3] + ' INF '
 
-#def p_ExpRel_ge(p):
-#    "ExpRel : ExpRel GE ExpA"
-#    print('ExpRel : ExpRel > ExpA')
-#    p[0] = p[1] + p[3] + ' SUPEQ '
+def p_ExpRel_ge(p):
+    "ExpRel : ExpRel GE ExpA"
+    print('ExpRel : ExpRel GE/>= ExpA')
+    p[0] = p[1] + p[3] + ' SUPEQ '
 
-#def p_ExpRel_le(p):
-#    "ExpRel : ExpRel LE ExpA"
-#    print('ExpRel : ExpRel > ExpA')
-#    p[0] = p[1] + p[3] + ' INFEQ '
+def p_ExpRel_le(p):
+    "ExpRel : ExpRel LE ExpA"
+    print('ExpRel : ExpRel LE/<= ExpA')
+    p[0] = p[1] + p[3] + ' INFEQ '
 
 def p_Exp_add(p):
     "ExpA : ExpA '+' Term"
@@ -247,6 +292,17 @@ def p_Factor_array(p):
     p[0] = ' PUSHGP PUSHI ' + str(p.parser.registers.get(p[1])['gp']) + ' PADD PUSHI ' + str(p[3]) + ' LOADN ' 
     #ou
     #p[0] = ' PUSHG ' + str(int((p.parser.registers.get(p[1])['gp']))+int(p[3]))
+
+def p_Factor_true(p):
+    "Factor : TRUE"
+    print('22')
+    p[0] = ' PUSHI 1 '
+
+def p_Factor_false(p):
+    "Factor : FALSE"
+    print('22')
+    p[0] = ' PUSHI 0 '
+
 #----------------------------------------
 def p_error(p):
     print('Syntax error: ', p)
