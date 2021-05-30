@@ -44,14 +44,9 @@ def p_Declaracao_array(p):
     print('6-1')
     p[0] = p[1]
 
-def p_Declaracao_array_bi(p):
-    "Declaracao : DeclArrayBi ';'"
-    print('6-2')
-    p[0] = p[1]
-
 def p_Declaracao_fun(p):
     "Declaracao : DeclFun"
-    print('6-3')
+    print('6-2')
     p[0]=p[1]
 
 def p_DeclVar_atrib(p):
@@ -101,25 +96,8 @@ def p_DeclArray(p):
         p[0] = ' PUSHN ' + str(p[4])
     print('8 - Nova variável tipo: ', p[1], 'nome: ',  p[2] )
 
-def p_DeclArrayBi(p):
-    "DeclArrayBi : INT id '[' number ']' '[' number ']'"
-    print('DeclArrayBi')
-    if p[2] in p.parser.registers:
-        print('Erro: Variável já em uso')
-        pass
-    else:
-        registo = {}
-        tamanho=int((p[4]+1) * (p[7]+1))
-        registo['tipo'] = 'array-bi'
-        registo['gp'] = p.parser.gp
-        registo['tamanho'] = tamanho
-        p.parser.registers.update({p[2] : registo})
-        p.parser.gp+=tamanho
-
-        p[0] = ' PUSHN ' + str(tamanho)
-
 def p_DeclFun(p):
-    "DeclFun : FUNCTION  id '(' ')' '{' BlocoInstrucoes RETURN ExpRel ';' '}'"
+    "DeclFun : FUNCTION  id '(' ')' '{' BlocoInstrucoes RETURN ExpRel '}'"
     if p[2] in p.parser.registers:
         print('Erro: Funcao já em uso')
         pass
@@ -131,8 +109,7 @@ def p_DeclFun(p):
         p.parser.registers.update({p[2] : registo})
         p.parser.gp+=1
         label_fun=p[2] + ':'
-        function_end=p[2] + 'end '
-    p[0] = ' PUSHI 0 JUMP '+ function_end + label_fun + p[6] + p[8] + ' STOREG ' + str(p.parser.registers.get(p[2])['gp-var']) + ' RETURN ' + function_end + ':'
+    p[0] = 'PUSHI 0 ' + label_fun + p[6] + p[8] + ' STOREG ' + str(p.parser.registers.get(p[2])['gp-var'])
 
 def p_Instrucao_dump(p):
     "Instrucao : DUMP"
@@ -145,21 +122,6 @@ def p_Instrucao_print(p):
     p[0] = p[2] + ' WRITEI '
     #print(p.parser.registers.get(p[2]))
 
-def p_Instrucao_printa(p):
-    "Instrucao : PRINTA id ';'"
-    print('10-printa')
-    #and p.parser.registers.get(p[2]['tipo']) == 'array'
-    if p[2] in p.parser.registers:
-        print('entrou')
-        label_array_begin = ' ' + p[2] + 'begin'
-        label_array_end = ' ' + p[2] + 'end'
-        tamanho = str(p.parser.registers.get(p[2])['tamanho'])
-        pos_i = str(p.parser.gp)
-        p.parser.gp+=1
-    else:
-        print('Erro: Array não declarado/Argumento tem de ser um array')
-        pass
-    p[0] = ' PUSHI 0 STOREG ' + pos_i + label_array_begin + ': ' + ' PUSHG ' + pos_i + ' PUSHI ' + tamanho + ' SUP JZ ' + label_array_end + ' PUSHGP PUSHI ' + str(p.parser.registers.get(p[2])['gp']) + ' PADD PUSHG ' + pos_i + ' LOADN WRITEI PUSHG ' + pos_i + ' PUSHI 1 ADD STOREG ' + pos_i + ' JUMP ' + label_array_begin + ' ' + label_array_end + ':'
 def p_Instrucao_read_var(p):
     "Instrucao : READ id ';'"
     print('11')
@@ -189,10 +151,6 @@ def p_Atribuicao_array(p):
     "Atribuicao : AtrArray"
     p[0]=p[1]
 
-def p_Atribuicao_array_bi(p):
-    "Atribuicao : AtrArrayBi"
-    p[0]=p[1]
-
 def p_Atribuicao_fun(p):
     "Atribuicao : AtrFun"
     p[0]=p[1]
@@ -207,17 +165,11 @@ def p_AtrArray(p):
     print('11-2')
     p[0] = ' PUSHGP PUSHI ' + str(p.parser.registers.get(p[1])['gp']) + ' PADD PUSHI ' + str(p[3]) + p[6] + ' STOREN ' 
 
-def p_AtrArrayBi(p):
-    "AtrArrayBi : id '[' number ']' '[' number ']' '=' ExpA"
-    print('11-3')
-    p[0] = ' PUSHGP PUSHI ' + str(p.parser.registers.get(p[1])['gp']) + ' PADD PUSHI ' + str((p[3]+1) * (p[6]+1)) + p[9] + ' STOREN ' 
-
 def p_AtrFun(p):
     "AtrFun : id '='  id '(' ')'"
     print('AtrFun')
-    p[0] = ' PUSHA ' + p[3] + ' CALL PUSHG ' + str(p.parser.registers.get(p[3])['gp-var']) + ' STOREG '+str(p.parser.registers.get(p[1])['gp'])
-    #p[0] =' JUMP ' + p[3] + ' STOREG '+ str(p.parser.registers.get(p[1])['gp'])
-    #p[0]= ' PUSHA ' + p[3] + ' CALL STOREG ' + str(p.parser.registers.get(p[1])['gp-var'])
+    p[0] =' PUSHG ' + str(p.parser.registers.get(p[3])['gp-var']) + ' STOREG '+str(p.parser.registers.get(p[1])['gp'])
+   #p[0]= ' PUSHA ' + p[3] + ' CALL STOREG ' + str(p.parser.registers.get(p[1])['gp-var'])
 
 def p_Instrucao_condicionais(p):
     "Instrucao : Condicional"
@@ -244,14 +196,6 @@ def p_Condicional_repeat_until(p):
     label_ciclo = 'ciclo'+ str(p.parser.contaCiclos)
     p.parser.contaCiclos += 1
     p[0] = label_ciclo + ':' + p[3]  + p[7] + ' JZ ' + label_ciclo
-
-def p_Condicional_while_do(p):
-    "Condicional : WHILE '(' Condicao ')' DO '{' BlocoInstrucoes '}'"
-    print('Condicional While Do')
-    label_inicio_ciclo = ' iniciociclo'+ str(p.parser.contaCiclos)
-    label_fim_ciclo = ' fimciclo'+ str(p.parser.contaCiclos)
-    p.parser.contaCiclos += 1
-    p[0] = label_inicio_ciclo + ':' + p[3] + ' JZ ' + label_fim_ciclo + p[7] + ' JUMP ' + label_inicio_ciclo + label_fim_ciclo + ':'
 
 def p_Condicao(p):
     "Condicao : ExpLogOr"
@@ -381,11 +325,6 @@ def p_Factor_array(p):
     #ou
     #p[0] = ' PUSHG ' + str(int((p.parser.registers.get(p[1])['gp']))+int(p[3]))
 
-def p_Factor_array_bi(p):
-    "Factor : id '[' number ']' '[' number ']'"
-    print('22')
-    p[0] = ' PUSHGP PUSHI ' + str(p.parser.registers.get(p[1])['gp']) + ' PADD PUSHI ' + str((p[3]+1) * (p[6]+1)) + ' LOADN ' 
-
 def p_Factor_true(p):
     "Factor : TRUE"
     print('22')
@@ -407,7 +346,7 @@ parser = yacc.yacc()
 
 parser.success = True
 parser.registers = {}   #tabela de identificadores
-parser.gp = 0           # offset em relacao ao global pointer(gp)
+parser.gp = 0           #offset em relacao ao global pointer(gp)
 parser.contaIfs = 0
 parser.contaCiclos = 0
 parser.varscontrolo = {}

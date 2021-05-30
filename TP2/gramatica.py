@@ -9,6 +9,7 @@ g = '''
 
         Declaracao : DeclVar  ';'
                    | DeclArray ';'
+                   | DeclArrayBi ';'
                    | DeclFun
 
         DeclVar : INT id '=' ExpA 
@@ -16,10 +17,12 @@ g = '''
 
         DeclArray : INT id [ number ]
 
-        DeclFun : empty
+        DeclArrayBi : INT id '[' number ']' '[' number ']' 
+
+        DeclFun : FUNCTION  id '(' ')' '{' BlocoInstrucoes RETURN ExpRel ';' '}'
         
         Instrucao : DUMP ';'
-                  | PRINT ExpA ';'    pode dar print Exp
+                  | PRINT ExpA ';'
                   | PRINTA ';'
                   | READ id ';'
                   | READ id '[' number ']' ';'
@@ -28,14 +31,23 @@ g = '''
 
         Atribuicao : AtrVar
                    | AtrArray
+                   | AtrArrayBi
+                   | AtrFun
         
         AtrVar : id '=' ExpA 
 
         AtrArray : id [ number ] '=' ExpA
+
+        AtrArrayBi : id '[' number ']' '[' number ']' '=' ExpA
+
+        AtrFun : id '='  id '(' ')'
+
         
-        Condicional : | IF ( Condicao ) { BlocoInstrucoes } ELSE { BlocoInstrucoes }
-                      | IF ( Condicao ) { BlocoInstrucoes }
-                      | WHILE (Condicao) { BlocoInstrucoes }
+        Condicional : | IF '(' Condicao ')' '{' BlocoInstrucoes '}' ELSE '{' BlocoInstrucoes '}'
+                      | IF '(' Condicao ')' '{' BlocoInstrucoes '}'
+                      | REPEAT '{' BlocoInstrucoes '}' 'UNTIL' '(' Condicao ')'
+                      | WHILE '(' Condicao ')' DO '{' BlocoInstrucoes '}' 
+                      
 
         (bottom up -> coisas com mais prioridade ficam mais a baixo/direita)
         
@@ -48,7 +60,7 @@ g = '''
                   | ExpLogAnd AND ExpLogOr
             
         ExpLogNot : ExpEq
-                  | !            X
+                  | '!' Condicao
         
         ExpEq : ExpRel
               | ExpEq EQ ExpRel
@@ -66,30 +78,14 @@ g = '''
         
         Term : Term '*' Factor
              | Term '/' Factor
-             | Term '%' Factor    X
+             | Term '%' Factor          X  ???
              | Factor
         
         Factor : id
                | number
                | '(' ExpA ')'
-               | id [ number ]
+               | id '[' number ']'
+               | id '[' number ']' '[' number ']' 
                | True
                | False
-     
-        X Cond : Cond OR Cond2
-        X     | Cond2
-        
-        X Cond2: Cond2 AND Cond3
-        X     | Cond3
-        
-        X Cond3 : NOT Cond
-        X     | ExpRel
-        
-          X?  ExpRel : Exp '>'Exp'
-          X     ...
-          X     | Exp
-        
-          X | ExpA                   Aritmetica
-          X | ExpL  AND OR NOT       Logica
-          X | ExpR                   Relacional
     '''

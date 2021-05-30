@@ -18,10 +18,17 @@ import sys
 reserved = {
     'int' : 'INT',
     'print' : 'PRINT',
+    'printa' : 'PRINTA',
     'read' : 'READ',
     'dump' : 'DUMP',
     'if'   : 'IF',
     'else' : 'ELSE',
+    'repeat' : 'REPEAT',
+    'until'  :  'UNTIL',
+    'function' : 'FUNCTION',
+    'return'   : 'RETURN',
+    'while'    : 'WHILE',
+    'do'       : 'DO',
 }
 
 tokens = [
@@ -87,12 +94,6 @@ def t_TRUE(t):
     r'True'
     print('lexer: encontrei True')
     return t
-
-def t_FALSE(t):
-    r'False'
-    print('lexer: encontrei False')
-    return t
-
 
 #----------------------------------------
 # Define a rule so we can track line numbers
