@@ -128,7 +128,6 @@ def p_Instrucao_print(p):
 def p_Instrucao_printa(p):
     "Instrucao : PRINTA id ';'"
     if p[2] in p.parser.registers:
-        print('entrou')
         label_array_begin = ' ' + p[2] + 'begin'
         label_array_end = ' ' + p[2] + 'end'
         tamanho = str(p.parser.registers.get(p[2])['tamanho'])
