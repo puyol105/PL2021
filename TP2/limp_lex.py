@@ -1,20 +1,11 @@
+# Ricardo Leal A75411
+# Renato Cruzinha A75310
+
 import ply.lex as lex
-# ------------------------------------------------------------
-# calclex.py
-#
-# tokenizer for a simple expression evaluator for:
-#   1. numbers
-#   2. operations: +,-,*,/
-#   3. grouping: ( ) 
-#   4. registers: a..z
-#   5. read: ?
-#   6. print !
-# 
-# ------------------------------------------------------------
 import ply.lex as lex
 import sys
 
-# List of token names.   This is always required
+# reserved
 reserved = {
     'int' : 'INT',
     'print' : 'PRINT',
@@ -31,48 +22,42 @@ reserved = {
     'do'       : 'DO',
 }
 
+# tokens
 tokens = [
     'number', 'id', 'BEGIN', 'EQ', 'NE', 'GE', 'LE', 'AND', 'NOT', 'OR', 'TRUE', 'FALSE',
  ] + list(reserved.values())
 
-# Literals
+# literals
 literals = ['+', '-', '*', '/', '(', ')', '{', '}', '?', ';', '=', '[', ']', '>', '<']
 t_BEGIN = r'BEGIN'
 
-# A regular expression rule with some action code
+# regular expression
 def t_EQ(t):
     r'=='
-    print('lexer: encontrei ==')
     return t
 
 def t_NE(t):
     r'!='
-    print('lexer: encontrei !=')
     return t
 
 def t_GE(t):
     r'>='
-    print('lexer: encontrei >=')
     return t
 
 def t_LE(t):
     r'<='
-    print('lexer: encontrei <=')
     return t
 
 def t_AND(t):
     r'&&'
-    print('lexer: encontrei &&')
     return t
 
 def t_OR(t):
     r'\|\|'
-    print('lexer: encontrei ||')
     return t
 
 def t_NOT(t):
     r'!'
-    print('lexer: encontrei !')
     return t
 
 def t_id(t):
@@ -92,21 +77,23 @@ def t_number(t):
 
 def t_TRUE(t):
     r'True'
-    print('lexer: encontrei True')
     return t
 
+def t_FALSE(t):
+    r'False'
+    return t
 #----------------------------------------
-# Define a rule so we can track line numbers
+
+# track line numbers
 def t_newline(t):
     r'\n+'
-    print('new line')
     t.lexer.lineno += len(t.value)
     t.lexer.skip(1)
  
-# A string containing ignored characters (spaces and tabs)
+# string containing ignored characters (spaces and tabs)
 t_ignore  = ' \t'
  
-# Error handling rule
+# error handling rule
 def t_error(t):
     print("Illegal character '%s'" % t.value[0])
     t.lexer.skip(1)
