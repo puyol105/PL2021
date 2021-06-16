@@ -2,7 +2,6 @@
 # Renato Cruzinha A75310
 
 import ply.lex as lex
-import ply.lex as lex
 import sys
 
 # reserved
@@ -28,7 +27,7 @@ tokens = [
  ] + list(reserved.values())
 
 # literals
-literals = ['+', '-', '*', '/', '(', ')', '{', '}', '?', ';', '=', '[', ']', '>', '<']
+literals = ['+', '-', '*', '/', '(', ')', '{', '}', '?', ';', '=', '[', ']', '>', '<', '%']
 t_BEGIN = r'BEGIN'
 
 # regular expression

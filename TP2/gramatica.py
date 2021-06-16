@@ -1,7 +1,7 @@
 g = ''' 
         Limp : BlocoDeclaracoes BEGIN BlocoInstrucoes
-
-        BlocoDeclaracoes : Declaracao
+       def p_BlocoDeclaracoes(p):
+        "BlocoDeclaracoes : Declaracao"
                          | BlocoDeclaracoes Declaracao
 
         BlocoInstrucoes : Instrucao
@@ -14,6 +14,7 @@ g = '''
 
         DeclVar : INT id '=' ExpA 
                 | INT id
+                
 
         DeclArray : INT id [ number ]
 
@@ -26,11 +27,13 @@ g = '''
                   | PRINTA ';'
                   | READ id ';'
                   | READ id '[' number ']' ';'
+                  | READ id '[' id ']' ';'
                   | Atribuicao ';'
                   | Condicional
 
         Atribuicao : AtrVar
                    | AtrArray
+                   | AtrArrayVar
                    | AtrArrayBi
                    | AtrFun
         
@@ -38,6 +41,8 @@ g = '''
 
         AtrArray : id [ number ] '=' ExpA
 
+        AtrArrayVar : id [ id ] '=' ExpA
+        
         AtrArrayBi : id '[' number ']' '[' number ']' '=' ExpA
 
         AtrFun : id '='  id '(' ')'
@@ -84,6 +89,7 @@ g = '''
         Factor : id
                | number
                | '(' ExpA ')'
+               | id '[' id ']'
                | id '[' number ']'
                | id '[' number ']' '[' number ']' 
                | True

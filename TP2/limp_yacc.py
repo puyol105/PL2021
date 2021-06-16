@@ -144,7 +144,11 @@ def p_Instrucao_read_var(p):
 
 def p_Instrucao_read_array(p):
     "Instrucao : READ id '[' number ']' ';'"
-    p[0] = 'PUSHGP PUSHI ' + str(p.parser.registers.get(p[2])['gp']) + ' PADD READ ATOI STOREN'
+    p[0] = 'PUSHGP PUSHI ' + str(p.parser.registers.get(p[2])['gp']) + ' PADD PUSHI ' + str(p[4]) + ' READ ATOI STOREN'
+
+def p_Instrucao_read_array_var(p):
+    "Instrucao : READ id '[' id ']' ';'"
+    p[0] = 'PUSHGP PUSHI ' + str(p.parser.registers.get(p[2])['gp']) + ' PADD PUSHG ' + str(p.parser.registers.get(p[4])['gp']) + ' READ ATOI STOREN'
 
 def p_Instrucao_atrib(p):
     "Instrucao : Atribuicao ';'"
@@ -156,6 +160,10 @@ def p_Atribuicao_var(p):
 
 def p_Atribuicao_array(p):
     "Atribuicao : AtrArray"
+    p[0]=p[1]
+
+def p_Atribuicao_array_var(p):
+    "Atribuicao : AtrArrayVar"
     p[0]=p[1]
 
 def p_Atribuicao_array_bi(p):
@@ -174,6 +182,11 @@ def p_AtrArray(p):
     "AtrArray : id '[' number ']' '=' ExpA"
     p[0] = ' PUSHGP PUSHI ' + str(p.parser.registers.get(p[1])['gp']) + ' PADD PUSHI ' + str(p[3]) + p[6] + ' STOREN ' 
 
+def p_AtrArrayVar(p):
+    "AtrArrayVar : id '[' id ']' '=' ExpA"
+    p[0] = ' PUSHGP PUSHI ' + str(p.parser.registers.get(p[1])['gp']) + ' PADD PUSHG ' + str(p.parser.registers.get(p[3])['gp']) + p[6] + ' STOREN ' 
+
+
 def p_AtrArrayBi(p):
     "AtrArrayBi : id '[' number ']' '[' number ']' '=' ExpA"
     p[0] = ' PUSHGP PUSHI ' + str(p.parser.registers.get(p[1])['gp']) + ' PADD PUSHI ' + str((p[3]+1) * (p[6]+1)) + p[9] + ' STOREN ' 
@@ -190,7 +203,7 @@ def p_Condicional_if(p):
     "Condicional : IF '(' Condicao ')' '{' BlocoInstrucoes '}'"
     label='fimif'+str(p.parser.contaIfs)
     p.parser.contaIfs += 1
-    p[0] = p[3] + ' JZ ' + label + p[6] + label + ':'
+    p[0] = p[3] + ' JZ ' + label + p[6] + ' ' + label + ':'
 
 def p_Condicional_if_else(p):
     "Condicional : IF '(' Condicao ')' '{' BlocoInstrucoes '}' ELSE '{' BlocoInstrucoes '}'"
@@ -202,15 +215,17 @@ def p_Condicional_if_else(p):
 def p_Condicional_repeat_until(p):
     "Condicional : REPEAT '{' BlocoInstrucoes '}' UNTIL '(' Condicao ')'"
     label_ciclo = 'ciclo'+ str(p.parser.contaCiclos)
+    #label_fim_ciclo = 'fimciclo' + str(p.parser.contaCiclos)
     p.parser.contaCiclos += 1
-    p[0] = label_ciclo + ':' + p[3]  + p[7] + ' JZ ' + label_ciclo
+    #p[0] = label_ciclo + ': ' + p[3] + p[7] + ' JZ ' + label_fim_ciclo + ' JUMP ' + label_ciclo + ' ' + label_fim_ciclo + ':' 
+    p[0] = label_ciclo + ': ' + p[3] + p[7] + ' NOT JZ ' + label_ciclo  
 
 def p_Condicional_while_do(p):
     "Condicional : WHILE '(' Condicao ')' DO '{' BlocoInstrucoes '}'"
     label_inicio_ciclo = ' iniciociclo'+ str(p.parser.contaCiclos)
     label_fim_ciclo = ' fimciclo'+ str(p.parser.contaCiclos)
     p.parser.contaCiclos += 1
-    p[0] = label_inicio_ciclo + ':' + p[3] + ' JZ ' + label_fim_ciclo + p[7] + ' JUMP ' + label_inicio_ciclo + label_fim_ciclo + ':'
+    p[0] = label_inicio_ciclo + ':' + p[3] + ' JZ ' + label_fim_ciclo + ' ' + p[7] + ' JUMP ' + label_inicio_ciclo + label_fim_ciclo + ':'
 
 def p_Condicao(p):
     "Condicao : ExpLogOr"
@@ -292,6 +307,10 @@ def p_Term_div(p):
     "Term : Term '/' Factor"
     p[0] = p[1] + p[3] + ' DIV '
 
+def p_Term_mod(p):
+    "Term : Term '%' Factor"
+    p[0] = p[1] + p[3] + ' MOD '
+
 def p_Term_factor(p):
     "Term : Factor"
     p[0] = p[1]
@@ -307,6 +326,10 @@ def p_Factor_number(p):
 def p_Factor_group(p):
     "Factor : '(' ExpA ')'"
     p[0] = p[2]
+
+def p_Factor_array_var(p):
+    "Factor : id '[' id ']'"
+    p[0] = ' PUSHGP PUSHI ' + str(p.parser.registers.get(p[1])['gp']) + ' PADD PUSHG ' + str(p.parser.registers.get(p[3])['gp']) + ' LOADN ' 
 
 def p_Factor_array(p):
     "Factor : id '[' number ']'"

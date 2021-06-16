@@ -1,0 +1,3037 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> Limp
+Rule 1     Limp -> BlocoDeclaracoes BEGIN BlocoInstrucoes
+Rule 2     BlocoDeclaracoes -> Declaracao
+Rule 3     BlocoDeclaracoes -> BlocoDeclaracoes Declaracao
+Rule 4     BlocoInstrucoes -> Instrucao
+Rule 5     BlocoInstrucoes -> BlocoInstrucoes Instrucao
+Rule 6     Declaracao -> DeclVar ;
+Rule 7     Declaracao -> DeclArray ;
+Rule 8     Declaracao -> DeclArrayBi ;
+Rule 9     Declaracao -> DeclFun
+Rule 10    DeclVar -> INT id = ExpA
+Rule 11    DeclVar -> INT id
+Rule 12    DeclArray -> INT id [ number ]
+Rule 13    DeclArrayBi -> INT id [ number ] [ number ]
+Rule 14    DeclFun -> FUNCTION id ( ) { BlocoInstrucoes RETURN ExpRel ; }
+Rule 15    Instrucao -> DUMP
+Rule 16    Instrucao -> PRINT ExpA ;
+Rule 17    Instrucao -> PRINTA id ;
+Rule 18    Instrucao -> READ id ;
+Rule 19    Instrucao -> READ id [ number ] ;
+Rule 20    Instrucao -> READ id [ id ] ;
+Rule 21    Instrucao -> Atribuicao ;
+Rule 22    Atribuicao -> AtrVar
+Rule 23    Atribuicao -> AtrArray
+Rule 24    Atribuicao -> AtrArrayVar
+Rule 25    Atribuicao -> AtrArrayBi
+Rule 26    Atribuicao -> AtrFun
+Rule 27    AtrVar -> id = ExpA
+Rule 28    AtrArray -> id [ number ] = ExpA
+Rule 29    AtrArrayVar -> id [ id ] = ExpA
+Rule 30    AtrArrayBi -> id [ number ] [ number ] = ExpA
+Rule 31    AtrFun -> id = id ( )
+Rule 32    Instrucao -> Condicional
+Rule 33    Condicional -> IF ( Condicao ) { BlocoInstrucoes }
+Rule 34    Condicional -> IF ( Condicao ) { BlocoInstrucoes } ELSE { BlocoInstrucoes }
+Rule 35    Condicional -> REPEAT { BlocoInstrucoes } UNTIL ( Condicao )
+Rule 36    Condicional -> WHILE ( Condicao ) DO { BlocoInstrucoes }
+Rule 37    Condicao -> ExpLogOr
+Rule 38    ExpLogOr -> ExpLogAnd
+Rule 39    ExpLogOr -> ExpLogOr OR ExpLogAnd
+Rule 40    ExpLogAnd -> ExpLogNot
+Rule 41    ExpLogAnd -> ExpLogAnd AND ExpLogOr
+Rule 42    ExpLogNot -> ExpEq
+Rule 43    ExpLogNot -> NOT Condicao
+Rule 44    ExpEq -> ExpRel
+Rule 45    ExpEq -> ExpEq EQ ExpRel
+Rule 46    ExpEq -> ExpEq NE ExpRel
+Rule 47    ExpRel -> ExpA
+Rule 48    ExpRel -> ExpRel > ExpA
+Rule 49    ExpRel -> ExpRel < ExpA
+Rule 50    ExpRel -> ExpRel GE ExpA
+Rule 51    ExpRel -> ExpRel LE ExpA
+Rule 52    ExpA -> ExpA + Term
+Rule 53    ExpA -> ExpA - Term
+Rule 54    ExpA -> Term
+Rule 55    Term -> Term * Factor
+Rule 56    Term -> Term / Factor
+Rule 57    Term -> Term % Factor
+Rule 58    Term -> Factor
+Rule 59    Factor -> id
+Rule 60    Factor -> number
+Rule 61    Factor -> ( ExpA )
+Rule 62    Factor -> id [ id ]
+Rule 63    Factor -> id [ number ]
+Rule 64    Factor -> id [ number ] [ number ]
+Rule 65    Factor -> TRUE
+Rule 66    Factor -> FALSE
+
+Terminals, with rules where they appear
+
+%                    : 57
+(                    : 14 31 33 34 35 36 61
+)                    : 14 31 33 34 35 36 61
+*                    : 55
++                    : 52
+-                    : 53
+/                    : 56
+;                    : 6 7 8 14 16 17 18 19 20 21
+<                    : 49
+=                    : 10 27 28 29 30 31
+>                    : 48
+AND                  : 41
+BEGIN                : 1
+DO                   : 36
+DUMP                 : 15
+ELSE                 : 34
+EQ                   : 45
+FALSE                : 66
+FUNCTION             : 14
+GE                   : 50
+IF                   : 33 34
+INT                  : 10 11 12 13
+LE                   : 51
+NE                   : 46
+NOT                  : 43
+OR                   : 39
+PRINT                : 16
+PRINTA               : 17
+READ                 : 18 19 20
+REPEAT               : 35
+RETURN               : 14
+TRUE                 : 65
+UNTIL                : 35
+WHILE                : 36
+[                    : 12 13 13 19 20 28 29 30 30 62 63 64 64
+]                    : 12 13 13 19 20 28 29 30 30 62 63 64 64
+error                : 
+id                   : 10 11 12 13 14 17 18 19 20 20 27 28 29 29 30 31 31 59 62 62 63 64
+number               : 12 13 13 19 28 30 30 60 63 64 64
+{                    : 14 33 34 34 35 36
+}                    : 14 33 34 34 35 36
+
+Nonterminals, with rules where they appear
+
+AtrArray             : 23
+AtrArrayBi           : 25
+AtrArrayVar          : 24
+AtrFun               : 26
+AtrVar               : 22
+Atribuicao           : 21
+BlocoDeclaracoes     : 1 3
+BlocoInstrucoes      : 1 5 14 33 34 34 35 36
+Condicao             : 33 34 35 36 43
+Condicional          : 32
+DeclArray            : 7
+DeclArrayBi          : 8
+DeclFun              : 9
+DeclVar              : 6
+Declaracao           : 2 3
+ExpA                 : 10 16 27 28 29 30 47 48 49 50 51 52 53 61
+ExpEq                : 42 45 46
+ExpLogAnd            : 38 39 41
+ExpLogNot            : 40
+ExpLogOr             : 37 39 41
+ExpRel               : 14 44 45 46 48 49 50 51
+Factor               : 55 56 57 58
+Instrucao            : 4 5
+Limp                 : 0
+Term                 : 52 53 54 55 56 57
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . Limp
+    (1) Limp -> . BlocoDeclaracoes BEGIN BlocoInstrucoes
+    (2) BlocoDeclaracoes -> . Declaracao
+    (3) BlocoDeclaracoes -> . BlocoDeclaracoes Declaracao
+    (6) Declaracao -> . DeclVar ;
+    (7) Declaracao -> . DeclArray ;
+    (8) Declaracao -> . DeclArrayBi ;
+    (9) Declaracao -> . DeclFun
+    (10) DeclVar -> . INT id = ExpA
+    (11) DeclVar -> . INT id
+    (12) DeclArray -> . INT id [ number ]
+    (13) DeclArrayBi -> . INT id [ number ] [ number ]
+    (14) DeclFun -> . FUNCTION id ( ) { BlocoInstrucoes RETURN ExpRel ; }
+
+    INT             shift and go to state 8
+    FUNCTION        shift and go to state 9
+
+    Limp                           shift and go to state 1
+    BlocoDeclaracoes               shift and go to state 2
+    Declaracao                     shift and go to state 3
+    DeclVar                        shift and go to state 4
+    DeclArray                      shift and go to state 5
+    DeclArrayBi                    shift and go to state 6
+    DeclFun                        shift and go to state 7
+
+state 1
+
+    (0) S' -> Limp .
+
+
+
+state 2
+
+    (1) Limp -> BlocoDeclaracoes . BEGIN BlocoInstrucoes
+    (3) BlocoDeclaracoes -> BlocoDeclaracoes . Declaracao
+    (6) Declaracao -> . DeclVar ;
+    (7) Declaracao -> . DeclArray ;
+    (8) Declaracao -> . DeclArrayBi ;
+    (9) Declaracao -> . DeclFun
+    (10) DeclVar -> . INT id = ExpA
+    (11) DeclVar -> . INT id
+    (12) DeclArray -> . INT id [ number ]
+    (13) DeclArrayBi -> . INT id [ number ] [ number ]
+    (14) DeclFun -> . FUNCTION id ( ) { BlocoInstrucoes RETURN ExpRel ; }
+
+    BEGIN           shift and go to state 10
+    INT             shift and go to state 8
+    FUNCTION        shift and go to state 9
+
+    Declaracao                     shift and go to state 11
+    DeclVar                        shift and go to state 4
+    DeclArray                      shift and go to state 5
+    DeclArrayBi                    shift and go to state 6
+    DeclFun                        shift and go to state 7
+
+state 3
+
+    (2) BlocoDeclaracoes -> Declaracao .
+
+    BEGIN           reduce using rule 2 (BlocoDeclaracoes -> Declaracao .)
+    INT             reduce using rule 2 (BlocoDeclaracoes -> Declaracao .)
+    FUNCTION        reduce using rule 2 (BlocoDeclaracoes -> Declaracao .)
+
+
+state 4
+
+    (6) Declaracao -> DeclVar . ;
+
+    ;               shift and go to state 12
+
+
+state 5
+
+    (7) Declaracao -> DeclArray . ;
+
+    ;               shift and go to state 13
+
+
+state 6
+
+    (8) Declaracao -> DeclArrayBi . ;
+
+    ;               shift and go to state 14
+
+
+state 7
+
+    (9) Declaracao -> DeclFun .
+
+    BEGIN           reduce using rule 9 (Declaracao -> DeclFun .)
+    INT             reduce using rule 9 (Declaracao -> DeclFun .)
+    FUNCTION        reduce using rule 9 (Declaracao -> DeclFun .)
+
+
+state 8
+
+    (10) DeclVar -> INT . id = ExpA
+    (11) DeclVar -> INT . id
+    (12) DeclArray -> INT . id [ number ]
+    (13) DeclArrayBi -> INT . id [ number ] [ number ]
+
+    id              shift and go to state 15
+
+
+state 9
+
+    (14) DeclFun -> FUNCTION . id ( ) { BlocoInstrucoes RETURN ExpRel ; }
+
+    id              shift and go to state 16
+
+
+state 10
+
+    (1) Limp -> BlocoDeclaracoes BEGIN . BlocoInstrucoes
+    (4) BlocoInstrucoes -> . Instrucao
+    (5) BlocoInstrucoes -> . BlocoInstrucoes Instrucao
+    (15) Instrucao -> . DUMP
+    (16) Instrucao -> . PRINT ExpA ;
+    (17) Instrucao -> . PRINTA id ;
+    (18) Instrucao -> . READ id ;
+    (19) Instrucao -> . READ id [ number ] ;
+    (20) Instrucao -> . READ id [ id ] ;
+    (21) Instrucao -> . Atribuicao ;
+    (32) Instrucao -> . Condicional
+    (22) Atribuicao -> . AtrVar
+    (23) Atribuicao -> . AtrArray
+    (24) Atribuicao -> . AtrArrayVar
+    (25) Atribuicao -> . AtrArrayBi
+    (26) Atribuicao -> . AtrFun
+    (33) Condicional -> . IF ( Condicao ) { BlocoInstrucoes }
+    (34) Condicional -> . IF ( Condicao ) { BlocoInstrucoes } ELSE { BlocoInstrucoes }
+    (35) Condicional -> . REPEAT { BlocoInstrucoes } UNTIL ( Condicao )
+    (36) Condicional -> . WHILE ( Condicao ) DO { BlocoInstrucoes }
+    (27) AtrVar -> . id = ExpA
+    (28) AtrArray -> . id [ number ] = ExpA
+    (29) AtrArrayVar -> . id [ id ] = ExpA
+    (30) AtrArrayBi -> . id [ number ] [ number ] = ExpA
+    (31) AtrFun -> . id = id ( )
+
+    DUMP            shift and go to state 19
+    PRINT           shift and go to state 20
+    PRINTA          shift and go to state 21
+    READ            shift and go to state 23
+    IF              shift and go to state 31
+    REPEAT          shift and go to state 32
+    WHILE           shift and go to state 33
+    id              shift and go to state 22
+
+    BlocoInstrucoes                shift and go to state 17
+    Instrucao                      shift and go to state 18
+    Atribuicao                     shift and go to state 24
+    Condicional                    shift and go to state 25
+    AtrVar                         shift and go to state 26
+    AtrArray                       shift and go to state 27
+    AtrArrayVar                    shift and go to state 28
+    AtrArrayBi                     shift and go to state 29
+    AtrFun                         shift and go to state 30
+
+state 11
+
+    (3) BlocoDeclaracoes -> BlocoDeclaracoes Declaracao .
+
+    BEGIN           reduce using rule 3 (BlocoDeclaracoes -> BlocoDeclaracoes Declaracao .)
+    INT             reduce using rule 3 (BlocoDeclaracoes -> BlocoDeclaracoes Declaracao .)
+    FUNCTION        reduce using rule 3 (BlocoDeclaracoes -> BlocoDeclaracoes Declaracao .)
+
+
+state 12
+
+    (6) Declaracao -> DeclVar ; .
+
+    BEGIN           reduce using rule 6 (Declaracao -> DeclVar ; .)
+    INT             reduce using rule 6 (Declaracao -> DeclVar ; .)
+    FUNCTION        reduce using rule 6 (Declaracao -> DeclVar ; .)
+
+
+state 13
+
+    (7) Declaracao -> DeclArray ; .
+
+    BEGIN           reduce using rule 7 (Declaracao -> DeclArray ; .)
+    INT             reduce using rule 7 (Declaracao -> DeclArray ; .)
+    FUNCTION        reduce using rule 7 (Declaracao -> DeclArray ; .)
+
+
+state 14
+
+    (8) Declaracao -> DeclArrayBi ; .
+
+    BEGIN           reduce using rule 8 (Declaracao -> DeclArrayBi ; .)
+    INT             reduce using rule 8 (Declaracao -> DeclArrayBi ; .)
+    FUNCTION        reduce using rule 8 (Declaracao -> DeclArrayBi ; .)
+
+
+state 15
+
+    (10) DeclVar -> INT id . = ExpA
+    (11) DeclVar -> INT id .
+    (12) DeclArray -> INT id . [ number ]
+    (13) DeclArrayBi -> INT id . [ number ] [ number ]
+
+    =               shift and go to state 34
+    ;               reduce using rule 11 (DeclVar -> INT id .)
+    [               shift and go to state 35
+
+
+state 16
+
+    (14) DeclFun -> FUNCTION id . ( ) { BlocoInstrucoes RETURN ExpRel ; }
+
+    (               shift and go to state 36
+
+
+state 17
+
+    (1) Limp -> BlocoDeclaracoes BEGIN BlocoInstrucoes .
+    (5) BlocoInstrucoes -> BlocoInstrucoes . Instrucao
+    (15) Instrucao -> . DUMP
+    (16) Instrucao -> . PRINT ExpA ;
+    (17) Instrucao -> . PRINTA id ;
+    (18) Instrucao -> . READ id ;
+    (19) Instrucao -> . READ id [ number ] ;
+    (20) Instrucao -> . READ id [ id ] ;
+    (21) Instrucao -> . Atribuicao ;
+    (32) Instrucao -> . Condicional
+    (22) Atribuicao -> . AtrVar
+    (23) Atribuicao -> . AtrArray
+    (24) Atribuicao -> . AtrArrayVar
+    (25) Atribuicao -> . AtrArrayBi
+    (26) Atribuicao -> . AtrFun
+    (33) Condicional -> . IF ( Condicao ) { BlocoInstrucoes }
+    (34) Condicional -> . IF ( Condicao ) { BlocoInstrucoes } ELSE { BlocoInstrucoes }
+    (35) Condicional -> . REPEAT { BlocoInstrucoes } UNTIL ( Condicao )
+    (36) Condicional -> . WHILE ( Condicao ) DO { BlocoInstrucoes }
+    (27) AtrVar -> . id = ExpA
+    (28) AtrArray -> . id [ number ] = ExpA
+    (29) AtrArrayVar -> . id [ id ] = ExpA
+    (30) AtrArrayBi -> . id [ number ] [ number ] = ExpA
+    (31) AtrFun -> . id = id ( )
+
+    $end            reduce using rule 1 (Limp -> BlocoDeclaracoes BEGIN BlocoInstrucoes .)
+    DUMP            shift and go to state 19
+    PRINT           shift and go to state 20
+    PRINTA          shift and go to state 21
+    READ            shift and go to state 23
+    IF              shift and go to state 31
+    REPEAT          shift and go to state 32
+    WHILE           shift and go to state 33
+    id              shift and go to state 22
+
+    Instrucao                      shift and go to state 37
+    Atribuicao                     shift and go to state 24
+    Condicional                    shift and go to state 25
+    AtrVar                         shift and go to state 26
+    AtrArray                       shift and go to state 27
+    AtrArrayVar                    shift and go to state 28
+    AtrArrayBi                     shift and go to state 29
+    AtrFun                         shift and go to state 30
+
+state 18
+
+    (4) BlocoInstrucoes -> Instrucao .
+
+    DUMP            reduce using rule 4 (BlocoInstrucoes -> Instrucao .)
+    PRINT           reduce using rule 4 (BlocoInstrucoes -> Instrucao .)
+    PRINTA          reduce using rule 4 (BlocoInstrucoes -> Instrucao .)
+    READ            reduce using rule 4 (BlocoInstrucoes -> Instrucao .)
+    IF              reduce using rule 4 (BlocoInstrucoes -> Instrucao .)
+    REPEAT          reduce using rule 4 (BlocoInstrucoes -> Instrucao .)
+    WHILE           reduce using rule 4 (BlocoInstrucoes -> Instrucao .)
+    id              reduce using rule 4 (BlocoInstrucoes -> Instrucao .)
+    $end            reduce using rule 4 (BlocoInstrucoes -> Instrucao .)
+    }               reduce using rule 4 (BlocoInstrucoes -> Instrucao .)
+    RETURN          reduce using rule 4 (BlocoInstrucoes -> Instrucao .)
+
+
+state 19
+
+    (15) Instrucao -> DUMP .
+
+    DUMP            reduce using rule 15 (Instrucao -> DUMP .)
+    PRINT           reduce using rule 15 (Instrucao -> DUMP .)
+    PRINTA          reduce using rule 15 (Instrucao -> DUMP .)
+    READ            reduce using rule 15 (Instrucao -> DUMP .)
+    IF              reduce using rule 15 (Instrucao -> DUMP .)
+    REPEAT          reduce using rule 15 (Instrucao -> DUMP .)
+    WHILE           reduce using rule 15 (Instrucao -> DUMP .)
+    id              reduce using rule 15 (Instrucao -> DUMP .)
+    $end            reduce using rule 15 (Instrucao -> DUMP .)
+    }               reduce using rule 15 (Instrucao -> DUMP .)
+    RETURN          reduce using rule 15 (Instrucao -> DUMP .)
+
+
+state 20
+
+    (16) Instrucao -> PRINT . ExpA ;
+    (52) ExpA -> . ExpA + Term
+    (53) ExpA -> . ExpA - Term
+    (54) ExpA -> . Term
+    (55) Term -> . Term * Factor
+    (56) Term -> . Term / Factor
+    (57) Term -> . Term % Factor
+    (58) Term -> . Factor
+    (59) Factor -> . id
+    (60) Factor -> . number
+    (61) Factor -> . ( ExpA )
+    (62) Factor -> . id [ id ]
+    (63) Factor -> . id [ number ]
+    (64) Factor -> . id [ number ] [ number ]
+    (65) Factor -> . TRUE
+    (66) Factor -> . FALSE
+
+    id              shift and go to state 41
+    number          shift and go to state 42
+    (               shift and go to state 43
+    TRUE            shift and go to state 44
+    FALSE           shift and go to state 45
+
+    ExpA                           shift and go to state 38
+    Term                           shift and go to state 39
+    Factor                         shift and go to state 40
+
+state 21
+
+    (17) Instrucao -> PRINTA . id ;
+
+    id              shift and go to state 46
+
+
+state 22
+
+    (27) AtrVar -> id . = ExpA
+    (28) AtrArray -> id . [ number ] = ExpA
+    (29) AtrArrayVar -> id . [ id ] = ExpA
+    (30) AtrArrayBi -> id . [ number ] [ number ] = ExpA
+    (31) AtrFun -> id . = id ( )
+
+    =               shift and go to state 47
+    [               shift and go to state 48
+
+
+state 23
+
+    (18) Instrucao -> READ . id ;
+    (19) Instrucao -> READ . id [ number ] ;
+    (20) Instrucao -> READ . id [ id ] ;
+
+    id              shift and go to state 49
+
+
+state 24
+
+    (21) Instrucao -> Atribuicao . ;
+
+    ;               shift and go to state 50
+
+
+state 25
+
+    (32) Instrucao -> Condicional .
+
+    DUMP            reduce using rule 32 (Instrucao -> Condicional .)
+    PRINT           reduce using rule 32 (Instrucao -> Condicional .)
+    PRINTA          reduce using rule 32 (Instrucao -> Condicional .)
+    READ            reduce using rule 32 (Instrucao -> Condicional .)
+    IF              reduce using rule 32 (Instrucao -> Condicional .)
+    REPEAT          reduce using rule 32 (Instrucao -> Condicional .)
+    WHILE           reduce using rule 32 (Instrucao -> Condicional .)
+    id              reduce using rule 32 (Instrucao -> Condicional .)
+    $end            reduce using rule 32 (Instrucao -> Condicional .)
+    }               reduce using rule 32 (Instrucao -> Condicional .)
+    RETURN          reduce using rule 32 (Instrucao -> Condicional .)
+
+
+state 26
+
+    (22) Atribuicao -> AtrVar .
+
+    ;               reduce using rule 22 (Atribuicao -> AtrVar .)
+
+
+state 27
+
+    (23) Atribuicao -> AtrArray .
+
+    ;               reduce using rule 23 (Atribuicao -> AtrArray .)
+
+
+state 28
+
+    (24) Atribuicao -> AtrArrayVar .
+
+    ;               reduce using rule 24 (Atribuicao -> AtrArrayVar .)
+
+
+state 29
+
+    (25) Atribuicao -> AtrArrayBi .
+
+    ;               reduce using rule 25 (Atribuicao -> AtrArrayBi .)
+
+
+state 30
+
+    (26) Atribuicao -> AtrFun .
+
+    ;               reduce using rule 26 (Atribuicao -> AtrFun .)
+
+
+state 31
+
+    (33) Condicional -> IF . ( Condicao ) { BlocoInstrucoes }
+    (34) Condicional -> IF . ( Condicao ) { BlocoInstrucoes } ELSE { BlocoInstrucoes }
+
+    (               shift and go to state 51
+
+
+state 32
+
+    (35) Condicional -> REPEAT . { BlocoInstrucoes } UNTIL ( Condicao )
+
+    {               shift and go to state 52
+
+
+state 33
+
+    (36) Condicional -> WHILE . ( Condicao ) DO { BlocoInstrucoes }
+
+    (               shift and go to state 53
+
+
+state 34
+
+    (10) DeclVar -> INT id = . ExpA
+    (52) ExpA -> . ExpA + Term
+    (53) ExpA -> . ExpA - Term
+    (54) ExpA -> . Term
+    (55) Term -> . Term * Factor
+    (56) Term -> . Term / Factor
+    (57) Term -> . Term % Factor
+    (58) Term -> . Factor
+    (59) Factor -> . id
+    (60) Factor -> . number
+    (61) Factor -> . ( ExpA )
+    (62) Factor -> . id [ id ]
+    (63) Factor -> . id [ number ]
+    (64) Factor -> . id [ number ] [ number ]
+    (65) Factor -> . TRUE
+    (66) Factor -> . FALSE
+
+    id              shift and go to state 41
+    number          shift and go to state 42
+    (               shift and go to state 43
+    TRUE            shift and go to state 44
+    FALSE           shift and go to state 45
+
+    ExpA                           shift and go to state 54
+    Term                           shift and go to state 39
+    Factor                         shift and go to state 40
+
+state 35
+
+    (12) DeclArray -> INT id [ . number ]
+    (13) DeclArrayBi -> INT id [ . number ] [ number ]
+
+    number          shift and go to state 55
+
+
+state 36
+
+    (14) DeclFun -> FUNCTION id ( . ) { BlocoInstrucoes RETURN ExpRel ; }
+
+    )               shift and go to state 56
+
+
+state 37
+
+    (5) BlocoInstrucoes -> BlocoInstrucoes Instrucao .
+
+    DUMP            reduce using rule 5 (BlocoInstrucoes -> BlocoInstrucoes Instrucao .)
+    PRINT           reduce using rule 5 (BlocoInstrucoes -> BlocoInstrucoes Instrucao .)
+    PRINTA          reduce using rule 5 (BlocoInstrucoes -> BlocoInstrucoes Instrucao .)
+    READ            reduce using rule 5 (BlocoInstrucoes -> BlocoInstrucoes Instrucao .)
+    IF              reduce using rule 5 (BlocoInstrucoes -> BlocoInstrucoes Instrucao .)
+    REPEAT          reduce using rule 5 (BlocoInstrucoes -> BlocoInstrucoes Instrucao .)
+    WHILE           reduce using rule 5 (BlocoInstrucoes -> BlocoInstrucoes Instrucao .)
+    id              reduce using rule 5 (BlocoInstrucoes -> BlocoInstrucoes Instrucao .)
+    $end            reduce using rule 5 (BlocoInstrucoes -> BlocoInstrucoes Instrucao .)
+    }               reduce using rule 5 (BlocoInstrucoes -> BlocoInstrucoes Instrucao .)
+    RETURN          reduce using rule 5 (BlocoInstrucoes -> BlocoInstrucoes Instrucao .)
+
+
+state 38
+
+    (16) Instrucao -> PRINT ExpA . ;
+    (52) ExpA -> ExpA . + Term
+    (53) ExpA -> ExpA . - Term
+
+    ;               shift and go to state 57
+    +               shift and go to state 58
+    -               shift and go to state 59
+
+
+state 39
+
+    (54) ExpA -> Term .
+    (55) Term -> Term . * Factor
+    (56) Term -> Term . / Factor
+    (57) Term -> Term . % Factor
+
+    ;               reduce using rule 54 (ExpA -> Term .)
+    +               reduce using rule 54 (ExpA -> Term .)
+    -               reduce using rule 54 (ExpA -> Term .)
+    )               reduce using rule 54 (ExpA -> Term .)
+    >               reduce using rule 54 (ExpA -> Term .)
+    <               reduce using rule 54 (ExpA -> Term .)
+    GE              reduce using rule 54 (ExpA -> Term .)
+    LE              reduce using rule 54 (ExpA -> Term .)
+    EQ              reduce using rule 54 (ExpA -> Term .)
+    NE              reduce using rule 54 (ExpA -> Term .)
+    AND             reduce using rule 54 (ExpA -> Term .)
+    OR              reduce using rule 54 (ExpA -> Term .)
+    *               shift and go to state 60
+    /               shift and go to state 61
+    %               shift and go to state 62
+
+
+state 40
+
+    (58) Term -> Factor .
+
+    *               reduce using rule 58 (Term -> Factor .)
+    /               reduce using rule 58 (Term -> Factor .)
+    %               reduce using rule 58 (Term -> Factor .)
+    ;               reduce using rule 58 (Term -> Factor .)
+    +               reduce using rule 58 (Term -> Factor .)
+    -               reduce using rule 58 (Term -> Factor .)
+    )               reduce using rule 58 (Term -> Factor .)
+    >               reduce using rule 58 (Term -> Factor .)
+    <               reduce using rule 58 (Term -> Factor .)
+    GE              reduce using rule 58 (Term -> Factor .)
+    LE              reduce using rule 58 (Term -> Factor .)
+    EQ              reduce using rule 58 (Term -> Factor .)
+    NE              reduce using rule 58 (Term -> Factor .)
+    AND             reduce using rule 58 (Term -> Factor .)
+    OR              reduce using rule 58 (Term -> Factor .)
+
+
+state 41
+
+    (59) Factor -> id .
+    (62) Factor -> id . [ id ]
+    (63) Factor -> id . [ number ]
+    (64) Factor -> id . [ number ] [ number ]
+
+    *               reduce using rule 59 (Factor -> id .)
+    /               reduce using rule 59 (Factor -> id .)
+    %               reduce using rule 59 (Factor -> id .)
+    ;               reduce using rule 59 (Factor -> id .)
+    +               reduce using rule 59 (Factor -> id .)
+    -               reduce using rule 59 (Factor -> id .)
+    )               reduce using rule 59 (Factor -> id .)
+    >               reduce using rule 59 (Factor -> id .)
+    <               reduce using rule 59 (Factor -> id .)
+    GE              reduce using rule 59 (Factor -> id .)
+    LE              reduce using rule 59 (Factor -> id .)
+    EQ              reduce using rule 59 (Factor -> id .)
+    NE              reduce using rule 59 (Factor -> id .)
+    AND             reduce using rule 59 (Factor -> id .)
+    OR              reduce using rule 59 (Factor -> id .)
+    [               shift and go to state 63
+
+
+state 42
+
+    (60) Factor -> number .
+
+    *               reduce using rule 60 (Factor -> number .)
+    /               reduce using rule 60 (Factor -> number .)
+    %               reduce using rule 60 (Factor -> number .)
+    ;               reduce using rule 60 (Factor -> number .)
+    +               reduce using rule 60 (Factor -> number .)
+    -               reduce using rule 60 (Factor -> number .)
+    )               reduce using rule 60 (Factor -> number .)
+    >               reduce using rule 60 (Factor -> number .)
+    <               reduce using rule 60 (Factor -> number .)
+    GE              reduce using rule 60 (Factor -> number .)
+    LE              reduce using rule 60 (Factor -> number .)
+    EQ              reduce using rule 60 (Factor -> number .)
+    NE              reduce using rule 60 (Factor -> number .)
+    AND             reduce using rule 60 (Factor -> number .)
+    OR              reduce using rule 60 (Factor -> number .)
+
+
+state 43
+
+    (61) Factor -> ( . ExpA )
+    (52) ExpA -> . ExpA + Term
+    (53) ExpA -> . ExpA - Term
+    (54) ExpA -> . Term
+    (55) Term -> . Term * Factor
+    (56) Term -> . Term / Factor
+    (57) Term -> . Term % Factor
+    (58) Term -> . Factor
+    (59) Factor -> . id
+    (60) Factor -> . number
+    (61) Factor -> . ( ExpA )
+    (62) Factor -> . id [ id ]
+    (63) Factor -> . id [ number ]
+    (64) Factor -> . id [ number ] [ number ]
+    (65) Factor -> . TRUE
+    (66) Factor -> . FALSE
+
+    id              shift and go to state 41
+    number          shift and go to state 42
+    (               shift and go to state 43
+    TRUE            shift and go to state 44
+    FALSE           shift and go to state 45
+
+    ExpA                           shift and go to state 64
+    Term                           shift and go to state 39
+    Factor                         shift and go to state 40
+
+state 44
+
+    (65) Factor -> TRUE .
+
+    *               reduce using rule 65 (Factor -> TRUE .)
+    /               reduce using rule 65 (Factor -> TRUE .)
+    %               reduce using rule 65 (Factor -> TRUE .)
+    ;               reduce using rule 65 (Factor -> TRUE .)
+    +               reduce using rule 65 (Factor -> TRUE .)
+    -               reduce using rule 65 (Factor -> TRUE .)
+    )               reduce using rule 65 (Factor -> TRUE .)
+    >               reduce using rule 65 (Factor -> TRUE .)
+    <               reduce using rule 65 (Factor -> TRUE .)
+    GE              reduce using rule 65 (Factor -> TRUE .)
+    LE              reduce using rule 65 (Factor -> TRUE .)
+    EQ              reduce using rule 65 (Factor -> TRUE .)
+    NE              reduce using rule 65 (Factor -> TRUE .)
+    AND             reduce using rule 65 (Factor -> TRUE .)
+    OR              reduce using rule 65 (Factor -> TRUE .)
+
+
+state 45
+
+    (66) Factor -> FALSE .
+
+    *               reduce using rule 66 (Factor -> FALSE .)
+    /               reduce using rule 66 (Factor -> FALSE .)
+    %               reduce using rule 66 (Factor -> FALSE .)
+    ;               reduce using rule 66 (Factor -> FALSE .)
+    +               reduce using rule 66 (Factor -> FALSE .)
+    -               reduce using rule 66 (Factor -> FALSE .)
+    )               reduce using rule 66 (Factor -> FALSE .)
+    >               reduce using rule 66 (Factor -> FALSE .)
+    <               reduce using rule 66 (Factor -> FALSE .)
+    GE              reduce using rule 66 (Factor -> FALSE .)
+    LE              reduce using rule 66 (Factor -> FALSE .)
+    EQ              reduce using rule 66 (Factor -> FALSE .)
+    NE              reduce using rule 66 (Factor -> FALSE .)
+    AND             reduce using rule 66 (Factor -> FALSE .)
+    OR              reduce using rule 66 (Factor -> FALSE .)
+
+
+state 46
+
+    (17) Instrucao -> PRINTA id . ;
+
+    ;               shift and go to state 65
+
+
+state 47
+
+    (27) AtrVar -> id = . ExpA
+    (31) AtrFun -> id = . id ( )
+    (52) ExpA -> . ExpA + Term
+    (53) ExpA -> . ExpA - Term
+    (54) ExpA -> . Term
+    (55) Term -> . Term * Factor
+    (56) Term -> . Term / Factor
+    (57) Term -> . Term % Factor
+    (58) Term -> . Factor
+    (59) Factor -> . id
+    (60) Factor -> . number
+    (61) Factor -> . ( ExpA )
+    (62) Factor -> . id [ id ]
+    (63) Factor -> . id [ number ]
+    (64) Factor -> . id [ number ] [ number ]
+    (65) Factor -> . TRUE
+    (66) Factor -> . FALSE
+
+    id              shift and go to state 66
+    number          shift and go to state 42
+    (               shift and go to state 43
+    TRUE            shift and go to state 44
+    FALSE           shift and go to state 45
+
+    ExpA                           shift and go to state 67
+    Term                           shift and go to state 39
+    Factor                         shift and go to state 40
+
+state 48
+
+    (28) AtrArray -> id [ . number ] = ExpA
+    (29) AtrArrayVar -> id [ . id ] = ExpA
+    (30) AtrArrayBi -> id [ . number ] [ number ] = ExpA
+
+    number          shift and go to state 69
+    id              shift and go to state 68
+
+
+state 49
+
+    (18) Instrucao -> READ id . ;
+    (19) Instrucao -> READ id . [ number ] ;
+    (20) Instrucao -> READ id . [ id ] ;
+
+    ;               shift and go to state 70
+    [               shift and go to state 71
+
+
+state 50
+
+    (21) Instrucao -> Atribuicao ; .
+
+    DUMP            reduce using rule 21 (Instrucao -> Atribuicao ; .)
+    PRINT           reduce using rule 21 (Instrucao -> Atribuicao ; .)
+    PRINTA          reduce using rule 21 (Instrucao -> Atribuicao ; .)
+    READ            reduce using rule 21 (Instrucao -> Atribuicao ; .)
+    IF              reduce using rule 21 (Instrucao -> Atribuicao ; .)
+    REPEAT          reduce using rule 21 (Instrucao -> Atribuicao ; .)
+    WHILE           reduce using rule 21 (Instrucao -> Atribuicao ; .)
+    id              reduce using rule 21 (Instrucao -> Atribuicao ; .)
+    $end            reduce using rule 21 (Instrucao -> Atribuicao ; .)
+    }               reduce using rule 21 (Instrucao -> Atribuicao ; .)
+    RETURN          reduce using rule 21 (Instrucao -> Atribuicao ; .)
+
+
+state 51
+
+    (33) Condicional -> IF ( . Condicao ) { BlocoInstrucoes }
+    (34) Condicional -> IF ( . Condicao ) { BlocoInstrucoes } ELSE { BlocoInstrucoes }
+    (37) Condicao -> . ExpLogOr
+    (38) ExpLogOr -> . ExpLogAnd
+    (39) ExpLogOr -> . ExpLogOr OR ExpLogAnd
+    (40) ExpLogAnd -> . ExpLogNot
+    (41) ExpLogAnd -> . ExpLogAnd AND ExpLogOr
+    (42) ExpLogNot -> . ExpEq
+    (43) ExpLogNot -> . NOT Condicao
+    (44) ExpEq -> . ExpRel
+    (45) ExpEq -> . ExpEq EQ ExpRel
+    (46) ExpEq -> . ExpEq NE ExpRel
+    (47) ExpRel -> . ExpA
+    (48) ExpRel -> . ExpRel > ExpA
+    (49) ExpRel -> . ExpRel < ExpA
+    (50) ExpRel -> . ExpRel GE ExpA
+    (51) ExpRel -> . ExpRel LE ExpA
+    (52) ExpA -> . ExpA + Term
+    (53) ExpA -> . ExpA - Term
+    (54) ExpA -> . Term
+    (55) Term -> . Term * Factor
+    (56) Term -> . Term / Factor
+    (57) Term -> . Term % Factor
+    (58) Term -> . Factor
+    (59) Factor -> . id
+    (60) Factor -> . number
+    (61) Factor -> . ( ExpA )
+    (62) Factor -> . id [ id ]
+    (63) Factor -> . id [ number ]
+    (64) Factor -> . id [ number ] [ number ]
+    (65) Factor -> . TRUE
+    (66) Factor -> . FALSE
+
+    NOT             shift and go to state 77
+    id              shift and go to state 41
+    number          shift and go to state 42
+    (               shift and go to state 43
+    TRUE            shift and go to state 44
+    FALSE           shift and go to state 45
+
+    Condicao                       shift and go to state 72
+    ExpLogOr                       shift and go to state 73
+    ExpLogAnd                      shift and go to state 74
+    ExpLogNot                      shift and go to state 75
+    ExpEq                          shift and go to state 76
+    ExpRel                         shift and go to state 78
+    ExpA                           shift and go to state 79
+    Term                           shift and go to state 39
+    Factor                         shift and go to state 40
+
+state 52
+
+    (35) Condicional -> REPEAT { . BlocoInstrucoes } UNTIL ( Condicao )
+    (4) BlocoInstrucoes -> . Instrucao
+    (5) BlocoInstrucoes -> . BlocoInstrucoes Instrucao
+    (15) Instrucao -> . DUMP
+    (16) Instrucao -> . PRINT ExpA ;
+    (17) Instrucao -> . PRINTA id ;
+    (18) Instrucao -> . READ id ;
+    (19) Instrucao -> . READ id [ number ] ;
+    (20) Instrucao -> . READ id [ id ] ;
+    (21) Instrucao -> . Atribuicao ;
+    (32) Instrucao -> . Condicional
+    (22) Atribuicao -> . AtrVar
+    (23) Atribuicao -> . AtrArray
+    (24) Atribuicao -> . AtrArrayVar
+    (25) Atribuicao -> . AtrArrayBi
+    (26) Atribuicao -> . AtrFun
+    (33) Condicional -> . IF ( Condicao ) { BlocoInstrucoes }
+    (34) Condicional -> . IF ( Condicao ) { BlocoInstrucoes } ELSE { BlocoInstrucoes }
+    (35) Condicional -> . REPEAT { BlocoInstrucoes } UNTIL ( Condicao )
+    (36) Condicional -> . WHILE ( Condicao ) DO { BlocoInstrucoes }
+    (27) AtrVar -> . id = ExpA
+    (28) AtrArray -> . id [ number ] = ExpA
+    (29) AtrArrayVar -> . id [ id ] = ExpA
+    (30) AtrArrayBi -> . id [ number ] [ number ] = ExpA
+    (31) AtrFun -> . id = id ( )
+
+    DUMP            shift and go to state 19
+    PRINT           shift and go to state 20
+    PRINTA          shift and go to state 21
+    READ            shift and go to state 23
+    IF              shift and go to state 31
+    REPEAT          shift and go to state 32
+    WHILE           shift and go to state 33
+    id              shift and go to state 22
+
+    BlocoInstrucoes                shift and go to state 80
+    Instrucao                      shift and go to state 18
+    Atribuicao                     shift and go to state 24
+    Condicional                    shift and go to state 25
+    AtrVar                         shift and go to state 26
+    AtrArray                       shift and go to state 27
+    AtrArrayVar                    shift and go to state 28
+    AtrArrayBi                     shift and go to state 29
+    AtrFun                         shift and go to state 30
+
+state 53
+
+    (36) Condicional -> WHILE ( . Condicao ) DO { BlocoInstrucoes }
+    (37) Condicao -> . ExpLogOr
+    (38) ExpLogOr -> . ExpLogAnd
+    (39) ExpLogOr -> . ExpLogOr OR ExpLogAnd
+    (40) ExpLogAnd -> . ExpLogNot
+    (41) ExpLogAnd -> . ExpLogAnd AND ExpLogOr
+    (42) ExpLogNot -> . ExpEq
+    (43) ExpLogNot -> . NOT Condicao
+    (44) ExpEq -> . ExpRel
+    (45) ExpEq -> . ExpEq EQ ExpRel
+    (46) ExpEq -> . ExpEq NE ExpRel
+    (47) ExpRel -> . ExpA
+    (48) ExpRel -> . ExpRel > ExpA
+    (49) ExpRel -> . ExpRel < ExpA
+    (50) ExpRel -> . ExpRel GE ExpA
+    (51) ExpRel -> . ExpRel LE ExpA
+    (52) ExpA -> . ExpA + Term
+    (53) ExpA -> . ExpA - Term
+    (54) ExpA -> . Term
+    (55) Term -> . Term * Factor
+    (56) Term -> . Term / Factor
+    (57) Term -> . Term % Factor
+    (58) Term -> . Factor
+    (59) Factor -> . id
+    (60) Factor -> . number
+    (61) Factor -> . ( ExpA )
+    (62) Factor -> . id [ id ]
+    (63) Factor -> . id [ number ]
+    (64) Factor -> . id [ number ] [ number ]
+    (65) Factor -> . TRUE
+    (66) Factor -> . FALSE
+
+    NOT             shift and go to state 77
+    id              shift and go to state 41
+    number          shift and go to state 42
+    (               shift and go to state 43
+    TRUE            shift and go to state 44
+    FALSE           shift and go to state 45
+
+    Condicao                       shift and go to state 81
+    ExpLogOr                       shift and go to state 73
+    ExpLogAnd                      shift and go to state 74
+    ExpLogNot                      shift and go to state 75
+    ExpEq                          shift and go to state 76
+    ExpRel                         shift and go to state 78
+    ExpA                           shift and go to state 79
+    Term                           shift and go to state 39
+    Factor                         shift and go to state 40
+
+state 54
+
+    (10) DeclVar -> INT id = ExpA .
+    (52) ExpA -> ExpA . + Term
+    (53) ExpA -> ExpA . - Term
+
+    ;               reduce using rule 10 (DeclVar -> INT id = ExpA .)
+    +               shift and go to state 58
+    -               shift and go to state 59
+
+
+state 55
+
+    (12) DeclArray -> INT id [ number . ]
+    (13) DeclArrayBi -> INT id [ number . ] [ number ]
+
+    ]               shift and go to state 82
+
+
+state 56
+
+    (14) DeclFun -> FUNCTION id ( ) . { BlocoInstrucoes RETURN ExpRel ; }
+
+    {               shift and go to state 83
+
+
+state 57
+
+    (16) Instrucao -> PRINT ExpA ; .
+
+    DUMP            reduce using rule 16 (Instrucao -> PRINT ExpA ; .)
+    PRINT           reduce using rule 16 (Instrucao -> PRINT ExpA ; .)
+    PRINTA          reduce using rule 16 (Instrucao -> PRINT ExpA ; .)
+    READ            reduce using rule 16 (Instrucao -> PRINT ExpA ; .)
+    IF              reduce using rule 16 (Instrucao -> PRINT ExpA ; .)
+    REPEAT          reduce using rule 16 (Instrucao -> PRINT ExpA ; .)
+    WHILE           reduce using rule 16 (Instrucao -> PRINT ExpA ; .)
+    id              reduce using rule 16 (Instrucao -> PRINT ExpA ; .)
+    $end            reduce using rule 16 (Instrucao -> PRINT ExpA ; .)
+    }               reduce using rule 16 (Instrucao -> PRINT ExpA ; .)
+    RETURN          reduce using rule 16 (Instrucao -> PRINT ExpA ; .)
+
+
+state 58
+
+    (52) ExpA -> ExpA + . Term
+    (55) Term -> . Term * Factor
+    (56) Term -> . Term / Factor
+    (57) Term -> . Term % Factor
+    (58) Term -> . Factor
+    (59) Factor -> . id
+    (60) Factor -> . number
+    (61) Factor -> . ( ExpA )
+    (62) Factor -> . id [ id ]
+    (63) Factor -> . id [ number ]
+    (64) Factor -> . id [ number ] [ number ]
+    (65) Factor -> . TRUE
+    (66) Factor -> . FALSE
+
+    id              shift and go to state 41
+    number          shift and go to state 42
+    (               shift and go to state 43
+    TRUE            shift and go to state 44
+    FALSE           shift and go to state 45
+
+    Term                           shift and go to state 84
+    Factor                         shift and go to state 40
+
+state 59
+
+    (53) ExpA -> ExpA - . Term
+    (55) Term -> . Term * Factor
+    (56) Term -> . Term / Factor
+    (57) Term -> . Term % Factor
+    (58) Term -> . Factor
+    (59) Factor -> . id
+    (60) Factor -> . number
+    (61) Factor -> . ( ExpA )
+    (62) Factor -> . id [ id ]
+    (63) Factor -> . id [ number ]
+    (64) Factor -> . id [ number ] [ number ]
+    (65) Factor -> . TRUE
+    (66) Factor -> . FALSE
+
+    id              shift and go to state 41
+    number          shift and go to state 42
+    (               shift and go to state 43
+    TRUE            shift and go to state 44
+    FALSE           shift and go to state 45
+
+    Term                           shift and go to state 85
+    Factor                         shift and go to state 40
+
+state 60
+
+    (55) Term -> Term * . Factor
+    (59) Factor -> . id
+    (60) Factor -> . number
+    (61) Factor -> . ( ExpA )
+    (62) Factor -> . id [ id ]
+    (63) Factor -> . id [ number ]
+    (64) Factor -> . id [ number ] [ number ]
+    (65) Factor -> . TRUE
+    (66) Factor -> . FALSE
+
+    id              shift and go to state 41
+    number          shift and go to state 42
+    (               shift and go to state 43
+    TRUE            shift and go to state 44
+    FALSE           shift and go to state 45
+
+    Factor                         shift and go to state 86
+
+state 61
+
+    (56) Term -> Term / . Factor
+    (59) Factor -> . id
+    (60) Factor -> . number
+    (61) Factor -> . ( ExpA )
+    (62) Factor -> . id [ id ]
+    (63) Factor -> . id [ number ]
+    (64) Factor -> . id [ number ] [ number ]
+    (65) Factor -> . TRUE
+    (66) Factor -> . FALSE
+
+    id              shift and go to state 41
+    number          shift and go to state 42
+    (               shift and go to state 43
+    TRUE            shift and go to state 44
+    FALSE           shift and go to state 45
+
+    Factor                         shift and go to state 87
+
+state 62
+
+    (57) Term -> Term % . Factor
+    (59) Factor -> . id
+    (60) Factor -> . number
+    (61) Factor -> . ( ExpA )
+    (62) Factor -> . id [ id ]
+    (63) Factor -> . id [ number ]
+    (64) Factor -> . id [ number ] [ number ]
+    (65) Factor -> . TRUE
+    (66) Factor -> . FALSE
+
+    id              shift and go to state 41
+    number          shift and go to state 42
+    (               shift and go to state 43
+    TRUE            shift and go to state 44
+    FALSE           shift and go to state 45
+
+    Factor                         shift and go to state 88
+
+state 63
+
+    (62) Factor -> id [ . id ]
+    (63) Factor -> id [ . number ]
+    (64) Factor -> id [ . number ] [ number ]
+
+    id              shift and go to state 89
+    number          shift and go to state 90
+
+
+state 64
+
+    (61) Factor -> ( ExpA . )
+    (52) ExpA -> ExpA . + Term
+    (53) ExpA -> ExpA . - Term
+
+    )               shift and go to state 91
+    +               shift and go to state 58
+    -               shift and go to state 59
+
+
+state 65
+
+    (17) Instrucao -> PRINTA id ; .
+
+    DUMP            reduce using rule 17 (Instrucao -> PRINTA id ; .)
+    PRINT           reduce using rule 17 (Instrucao -> PRINTA id ; .)
+    PRINTA          reduce using rule 17 (Instrucao -> PRINTA id ; .)
+    READ            reduce using rule 17 (Instrucao -> PRINTA id ; .)
+    IF              reduce using rule 17 (Instrucao -> PRINTA id ; .)
+    REPEAT          reduce using rule 17 (Instrucao -> PRINTA id ; .)
+    WHILE           reduce using rule 17 (Instrucao -> PRINTA id ; .)
+    id              reduce using rule 17 (Instrucao -> PRINTA id ; .)
+    $end            reduce using rule 17 (Instrucao -> PRINTA id ; .)
+    }               reduce using rule 17 (Instrucao -> PRINTA id ; .)
+    RETURN          reduce using rule 17 (Instrucao -> PRINTA id ; .)
+
+
+state 66
+
+    (31) AtrFun -> id = id . ( )
+    (59) Factor -> id .
+    (62) Factor -> id . [ id ]
+    (63) Factor -> id . [ number ]
+    (64) Factor -> id . [ number ] [ number ]
+
+    (               shift and go to state 92
+    *               reduce using rule 59 (Factor -> id .)
+    /               reduce using rule 59 (Factor -> id .)
+    %               reduce using rule 59 (Factor -> id .)
+    +               reduce using rule 59 (Factor -> id .)
+    -               reduce using rule 59 (Factor -> id .)
+    ;               reduce using rule 59 (Factor -> id .)
+    [               shift and go to state 63
+
+
+state 67
+
+    (27) AtrVar -> id = ExpA .
+    (52) ExpA -> ExpA . + Term
+    (53) ExpA -> ExpA . - Term
+
+    ;               reduce using rule 27 (AtrVar -> id = ExpA .)
+    +               shift and go to state 58
+    -               shift and go to state 59
+
+
+state 68
+
+    (29) AtrArrayVar -> id [ id . ] = ExpA
+
+    ]               shift and go to state 93
+
+
+state 69
+
+    (28) AtrArray -> id [ number . ] = ExpA
+    (30) AtrArrayBi -> id [ number . ] [ number ] = ExpA
+
+    ]               shift and go to state 94
+
+
+state 70
+
+    (18) Instrucao -> READ id ; .
+
+    DUMP            reduce using rule 18 (Instrucao -> READ id ; .)
+    PRINT           reduce using rule 18 (Instrucao -> READ id ; .)
+    PRINTA          reduce using rule 18 (Instrucao -> READ id ; .)
+    READ            reduce using rule 18 (Instrucao -> READ id ; .)
+    IF              reduce using rule 18 (Instrucao -> READ id ; .)
+    REPEAT          reduce using rule 18 (Instrucao -> READ id ; .)
+    WHILE           reduce using rule 18 (Instrucao -> READ id ; .)
+    id              reduce using rule 18 (Instrucao -> READ id ; .)
+    $end            reduce using rule 18 (Instrucao -> READ id ; .)
+    }               reduce using rule 18 (Instrucao -> READ id ; .)
+    RETURN          reduce using rule 18 (Instrucao -> READ id ; .)
+
+
+state 71
+
+    (19) Instrucao -> READ id [ . number ] ;
+    (20) Instrucao -> READ id [ . id ] ;
+
+    number          shift and go to state 96
+    id              shift and go to state 95
+
+
+state 72
+
+    (33) Condicional -> IF ( Condicao . ) { BlocoInstrucoes }
+    (34) Condicional -> IF ( Condicao . ) { BlocoInstrucoes } ELSE { BlocoInstrucoes }
+
+    )               shift and go to state 97
+
+
+state 73
+
+    (37) Condicao -> ExpLogOr .
+    (39) ExpLogOr -> ExpLogOr . OR ExpLogAnd
+
+  ! shift/reduce conflict for OR resolved as shift
+    )               reduce using rule 37 (Condicao -> ExpLogOr .)
+    AND             reduce using rule 37 (Condicao -> ExpLogOr .)
+    OR              shift and go to state 98
+
+  ! OR              [ reduce using rule 37 (Condicao -> ExpLogOr .) ]
+
+
+state 74
+
+    (38) ExpLogOr -> ExpLogAnd .
+    (41) ExpLogAnd -> ExpLogAnd . AND ExpLogOr
+
+  ! shift/reduce conflict for AND resolved as shift
+    OR              reduce using rule 38 (ExpLogOr -> ExpLogAnd .)
+    )               reduce using rule 38 (ExpLogOr -> ExpLogAnd .)
+    AND             shift and go to state 99
+
+  ! AND             [ reduce using rule 38 (ExpLogOr -> ExpLogAnd .) ]
+
+
+state 75
+
+    (40) ExpLogAnd -> ExpLogNot .
+
+    AND             reduce using rule 40 (ExpLogAnd -> ExpLogNot .)
+    OR              reduce using rule 40 (ExpLogAnd -> ExpLogNot .)
+    )               reduce using rule 40 (ExpLogAnd -> ExpLogNot .)
+
+
+state 76
+
+    (42) ExpLogNot -> ExpEq .
+    (45) ExpEq -> ExpEq . EQ ExpRel
+    (46) ExpEq -> ExpEq . NE ExpRel
+
+    AND             reduce using rule 42 (ExpLogNot -> ExpEq .)
+    OR              reduce using rule 42 (ExpLogNot -> ExpEq .)
+    )               reduce using rule 42 (ExpLogNot -> ExpEq .)
+    EQ              shift and go to state 100
+    NE              shift and go to state 101
+
+
+state 77
+
+    (43) ExpLogNot -> NOT . Condicao
+    (37) Condicao -> . ExpLogOr
+    (38) ExpLogOr -> . ExpLogAnd
+    (39) ExpLogOr -> . ExpLogOr OR ExpLogAnd
+    (40) ExpLogAnd -> . ExpLogNot
+    (41) ExpLogAnd -> . ExpLogAnd AND ExpLogOr
+    (42) ExpLogNot -> . ExpEq
+    (43) ExpLogNot -> . NOT Condicao
+    (44) ExpEq -> . ExpRel
+    (45) ExpEq -> . ExpEq EQ ExpRel
+    (46) ExpEq -> . ExpEq NE ExpRel
+    (47) ExpRel -> . ExpA
+    (48) ExpRel -> . ExpRel > ExpA
+    (49) ExpRel -> . ExpRel < ExpA
+    (50) ExpRel -> . ExpRel GE ExpA
+    (51) ExpRel -> . ExpRel LE ExpA
+    (52) ExpA -> . ExpA + Term
+    (53) ExpA -> . ExpA - Term
+    (54) ExpA -> . Term
+    (55) Term -> . Term * Factor
+    (56) Term -> . Term / Factor
+    (57) Term -> . Term % Factor
+    (58) Term -> . Factor
+    (59) Factor -> . id
+    (60) Factor -> . number
+    (61) Factor -> . ( ExpA )
+    (62) Factor -> . id [ id ]
+    (63) Factor -> . id [ number ]
+    (64) Factor -> . id [ number ] [ number ]
+    (65) Factor -> . TRUE
+    (66) Factor -> . FALSE
+
+    NOT             shift and go to state 77
+    id              shift and go to state 41
+    number          shift and go to state 42
+    (               shift and go to state 43
+    TRUE            shift and go to state 44
+    FALSE           shift and go to state 45
+
+    Condicao                       shift and go to state 102
+    ExpLogOr                       shift and go to state 73
+    ExpLogAnd                      shift and go to state 74
+    ExpLogNot                      shift and go to state 75
+    ExpEq                          shift and go to state 76
+    ExpRel                         shift and go to state 78
+    ExpA                           shift and go to state 79
+    Term                           shift and go to state 39
+    Factor                         shift and go to state 40
+
+state 78
+
+    (44) ExpEq -> ExpRel .
+    (48) ExpRel -> ExpRel . > ExpA
+    (49) ExpRel -> ExpRel . < ExpA
+    (50) ExpRel -> ExpRel . GE ExpA
+    (51) ExpRel -> ExpRel . LE ExpA
+
+    EQ              reduce using rule 44 (ExpEq -> ExpRel .)
+    NE              reduce using rule 44 (ExpEq -> ExpRel .)
+    AND             reduce using rule 44 (ExpEq -> ExpRel .)
+    OR              reduce using rule 44 (ExpEq -> ExpRel .)
+    )               reduce using rule 44 (ExpEq -> ExpRel .)
+    >               shift and go to state 103
+    <               shift and go to state 104
+    GE              shift and go to state 105
+    LE              shift and go to state 106
+
+
+state 79
+
+    (47) ExpRel -> ExpA .
+    (52) ExpA -> ExpA . + Term
+    (53) ExpA -> ExpA . - Term
+
+    >               reduce using rule 47 (ExpRel -> ExpA .)
+    <               reduce using rule 47 (ExpRel -> ExpA .)
+    GE              reduce using rule 47 (ExpRel -> ExpA .)
+    LE              reduce using rule 47 (ExpRel -> ExpA .)
+    EQ              reduce using rule 47 (ExpRel -> ExpA .)
+    NE              reduce using rule 47 (ExpRel -> ExpA .)
+    AND             reduce using rule 47 (ExpRel -> ExpA .)
+    OR              reduce using rule 47 (ExpRel -> ExpA .)
+    )               reduce using rule 47 (ExpRel -> ExpA .)
+    ;               reduce using rule 47 (ExpRel -> ExpA .)
+    +               shift and go to state 58
+    -               shift and go to state 59
+
+
+state 80
+
+    (35) Condicional -> REPEAT { BlocoInstrucoes . } UNTIL ( Condicao )
+    (5) BlocoInstrucoes -> BlocoInstrucoes . Instrucao
+    (15) Instrucao -> . DUMP
+    (16) Instrucao -> . PRINT ExpA ;
+    (17) Instrucao -> . PRINTA id ;
+    (18) Instrucao -> . READ id ;
+    (19) Instrucao -> . READ id [ number ] ;
+    (20) Instrucao -> . READ id [ id ] ;
+    (21) Instrucao -> . Atribuicao ;
+    (32) Instrucao -> . Condicional
+    (22) Atribuicao -> . AtrVar
+    (23) Atribuicao -> . AtrArray
+    (24) Atribuicao -> . AtrArrayVar
+    (25) Atribuicao -> . AtrArrayBi
+    (26) Atribuicao -> . AtrFun
+    (33) Condicional -> . IF ( Condicao ) { BlocoInstrucoes }
+    (34) Condicional -> . IF ( Condicao ) { BlocoInstrucoes } ELSE { BlocoInstrucoes }
+    (35) Condicional -> . REPEAT { BlocoInstrucoes } UNTIL ( Condicao )
+    (36) Condicional -> . WHILE ( Condicao ) DO { BlocoInstrucoes }
+    (27) AtrVar -> . id = ExpA
+    (28) AtrArray -> . id [ number ] = ExpA
+    (29) AtrArrayVar -> . id [ id ] = ExpA
+    (30) AtrArrayBi -> . id [ number ] [ number ] = ExpA
+    (31) AtrFun -> . id = id ( )
+
+    }               shift and go to state 107
+    DUMP            shift and go to state 19
+    PRINT           shift and go to state 20
+    PRINTA          shift and go to state 21
+    READ            shift and go to state 23
+    IF              shift and go to state 31
+    REPEAT          shift and go to state 32
+    WHILE           shift and go to state 33
+    id              shift and go to state 22
+
+    Instrucao                      shift and go to state 37
+    Atribuicao                     shift and go to state 24
+    Condicional                    shift and go to state 25
+    AtrVar                         shift and go to state 26
+    AtrArray                       shift and go to state 27
+    AtrArrayVar                    shift and go to state 28
+    AtrArrayBi                     shift and go to state 29
+    AtrFun                         shift and go to state 30
+
+state 81
+
+    (36) Condicional -> WHILE ( Condicao . ) DO { BlocoInstrucoes }
+
+    )               shift and go to state 108
+
+
+state 82
+
+    (12) DeclArray -> INT id [ number ] .
+    (13) DeclArrayBi -> INT id [ number ] . [ number ]
+
+    ;               reduce using rule 12 (DeclArray -> INT id [ number ] .)
+    [               shift and go to state 109
+
+
+state 83
+
+    (14) DeclFun -> FUNCTION id ( ) { . BlocoInstrucoes RETURN ExpRel ; }
+    (4) BlocoInstrucoes -> . Instrucao
+    (5) BlocoInstrucoes -> . BlocoInstrucoes Instrucao
+    (15) Instrucao -> . DUMP
+    (16) Instrucao -> . PRINT ExpA ;
+    (17) Instrucao -> . PRINTA id ;
+    (18) Instrucao -> . READ id ;
+    (19) Instrucao -> . READ id [ number ] ;
+    (20) Instrucao -> . READ id [ id ] ;
+    (21) Instrucao -> . Atribuicao ;
+    (32) Instrucao -> . Condicional
+    (22) Atribuicao -> . AtrVar
+    (23) Atribuicao -> . AtrArray
+    (24) Atribuicao -> . AtrArrayVar
+    (25) Atribuicao -> . AtrArrayBi
+    (26) Atribuicao -> . AtrFun
+    (33) Condicional -> . IF ( Condicao ) { BlocoInstrucoes }
+    (34) Condicional -> . IF ( Condicao ) { BlocoInstrucoes } ELSE { BlocoInstrucoes }
+    (35) Condicional -> . REPEAT { BlocoInstrucoes } UNTIL ( Condicao )
+    (36) Condicional -> . WHILE ( Condicao ) DO { BlocoInstrucoes }
+    (27) AtrVar -> . id = ExpA
+    (28) AtrArray -> . id [ number ] = ExpA
+    (29) AtrArrayVar -> . id [ id ] = ExpA
+    (30) AtrArrayBi -> . id [ number ] [ number ] = ExpA
+    (31) AtrFun -> . id = id ( )
+
+    DUMP            shift and go to state 19
+    PRINT           shift and go to state 20
+    PRINTA          shift and go to state 21
+    READ            shift and go to state 23
+    IF              shift and go to state 31
+    REPEAT          shift and go to state 32
+    WHILE           shift and go to state 33
+    id              shift and go to state 22
+
+    BlocoInstrucoes                shift and go to state 110
+    Instrucao                      shift and go to state 18
+    Atribuicao                     shift and go to state 24
+    Condicional                    shift and go to state 25
+    AtrVar                         shift and go to state 26
+    AtrArray                       shift and go to state 27
+    AtrArrayVar                    shift and go to state 28
+    AtrArrayBi                     shift and go to state 29
+    AtrFun                         shift and go to state 30
+
+state 84
+
+    (52) ExpA -> ExpA + Term .
+    (55) Term -> Term . * Factor
+    (56) Term -> Term . / Factor
+    (57) Term -> Term . % Factor
+
+    ;               reduce using rule 52 (ExpA -> ExpA + Term .)
+    +               reduce using rule 52 (ExpA -> ExpA + Term .)
+    -               reduce using rule 52 (ExpA -> ExpA + Term .)
+    )               reduce using rule 52 (ExpA -> ExpA + Term .)
+    >               reduce using rule 52 (ExpA -> ExpA + Term .)
+    <               reduce using rule 52 (ExpA -> ExpA + Term .)
+    GE              reduce using rule 52 (ExpA -> ExpA + Term .)
+    LE              reduce using rule 52 (ExpA -> ExpA + Term .)
+    EQ              reduce using rule 52 (ExpA -> ExpA + Term .)
+    NE              reduce using rule 52 (ExpA -> ExpA + Term .)
+    AND             reduce using rule 52 (ExpA -> ExpA + Term .)
+    OR              reduce using rule 52 (ExpA -> ExpA + Term .)
+    *               shift and go to state 60
+    /               shift and go to state 61
+    %               shift and go to state 62
+
+
+state 85
+
+    (53) ExpA -> ExpA - Term .
+    (55) Term -> Term . * Factor
+    (56) Term -> Term . / Factor
+    (57) Term -> Term . % Factor
+
+    ;               reduce using rule 53 (ExpA -> ExpA - Term .)
+    +               reduce using rule 53 (ExpA -> ExpA - Term .)
+    -               reduce using rule 53 (ExpA -> ExpA - Term .)
+    )               reduce using rule 53 (ExpA -> ExpA - Term .)
+    >               reduce using rule 53 (ExpA -> ExpA - Term .)
+    <               reduce using rule 53 (ExpA -> ExpA - Term .)
+    GE              reduce using rule 53 (ExpA -> ExpA - Term .)
+    LE              reduce using rule 53 (ExpA -> ExpA - Term .)
+    EQ              reduce using rule 53 (ExpA -> ExpA - Term .)
+    NE              reduce using rule 53 (ExpA -> ExpA - Term .)
+    AND             reduce using rule 53 (ExpA -> ExpA - Term .)
+    OR              reduce using rule 53 (ExpA -> ExpA - Term .)
+    *               shift and go to state 60
+    /               shift and go to state 61
+    %               shift and go to state 62
+
+
+state 86
+
+    (55) Term -> Term * Factor .
+
+    *               reduce using rule 55 (Term -> Term * Factor .)
+    /               reduce using rule 55 (Term -> Term * Factor .)
+    %               reduce using rule 55 (Term -> Term * Factor .)
+    ;               reduce using rule 55 (Term -> Term * Factor .)
+    +               reduce using rule 55 (Term -> Term * Factor .)
+    -               reduce using rule 55 (Term -> Term * Factor .)
+    )               reduce using rule 55 (Term -> Term * Factor .)
+    >               reduce using rule 55 (Term -> Term * Factor .)
+    <               reduce using rule 55 (Term -> Term * Factor .)
+    GE              reduce using rule 55 (Term -> Term * Factor .)
+    LE              reduce using rule 55 (Term -> Term * Factor .)
+    EQ              reduce using rule 55 (Term -> Term * Factor .)
+    NE              reduce using rule 55 (Term -> Term * Factor .)
+    AND             reduce using rule 55 (Term -> Term * Factor .)
+    OR              reduce using rule 55 (Term -> Term * Factor .)
+
+
+state 87
+
+    (56) Term -> Term / Factor .
+
+    *               reduce using rule 56 (Term -> Term / Factor .)
+    /               reduce using rule 56 (Term -> Term / Factor .)
+    %               reduce using rule 56 (Term -> Term / Factor .)
+    ;               reduce using rule 56 (Term -> Term / Factor .)
+    +               reduce using rule 56 (Term -> Term / Factor .)
+    -               reduce using rule 56 (Term -> Term / Factor .)
+    )               reduce using rule 56 (Term -> Term / Factor .)
+    >               reduce using rule 56 (Term -> Term / Factor .)
+    <               reduce using rule 56 (Term -> Term / Factor .)
+    GE              reduce using rule 56 (Term -> Term / Factor .)
+    LE              reduce using rule 56 (Term -> Term / Factor .)
+    EQ              reduce using rule 56 (Term -> Term / Factor .)
+    NE              reduce using rule 56 (Term -> Term / Factor .)
+    AND             reduce using rule 56 (Term -> Term / Factor .)
+    OR              reduce using rule 56 (Term -> Term / Factor .)
+
+
+state 88
+
+    (57) Term -> Term % Factor .
+
+    *               reduce using rule 57 (Term -> Term % Factor .)
+    /               reduce using rule 57 (Term -> Term % Factor .)
+    %               reduce using rule 57 (Term -> Term % Factor .)
+    ;               reduce using rule 57 (Term -> Term % Factor .)
+    +               reduce using rule 57 (Term -> Term % Factor .)
+    -               reduce using rule 57 (Term -> Term % Factor .)
+    )               reduce using rule 57 (Term -> Term % Factor .)
+    >               reduce using rule 57 (Term -> Term % Factor .)
+    <               reduce using rule 57 (Term -> Term % Factor .)
+    GE              reduce using rule 57 (Term -> Term % Factor .)
+    LE              reduce using rule 57 (Term -> Term % Factor .)
+    EQ              reduce using rule 57 (Term -> Term % Factor .)
+    NE              reduce using rule 57 (Term -> Term % Factor .)
+    AND             reduce using rule 57 (Term -> Term % Factor .)
+    OR              reduce using rule 57 (Term -> Term % Factor .)
+
+
+state 89
+
+    (62) Factor -> id [ id . ]
+
+    ]               shift and go to state 111
+
+
+state 90
+
+    (63) Factor -> id [ number . ]
+    (64) Factor -> id [ number . ] [ number ]
+
+    ]               shift and go to state 112
+
+
+state 91
+
+    (61) Factor -> ( ExpA ) .
+
+    *               reduce using rule 61 (Factor -> ( ExpA ) .)
+    /               reduce using rule 61 (Factor -> ( ExpA ) .)
+    %               reduce using rule 61 (Factor -> ( ExpA ) .)
+    ;               reduce using rule 61 (Factor -> ( ExpA ) .)
+    +               reduce using rule 61 (Factor -> ( ExpA ) .)
+    -               reduce using rule 61 (Factor -> ( ExpA ) .)
+    )               reduce using rule 61 (Factor -> ( ExpA ) .)
+    >               reduce using rule 61 (Factor -> ( ExpA ) .)
+    <               reduce using rule 61 (Factor -> ( ExpA ) .)
+    GE              reduce using rule 61 (Factor -> ( ExpA ) .)
+    LE              reduce using rule 61 (Factor -> ( ExpA ) .)
+    EQ              reduce using rule 61 (Factor -> ( ExpA ) .)
+    NE              reduce using rule 61 (Factor -> ( ExpA ) .)
+    AND             reduce using rule 61 (Factor -> ( ExpA ) .)
+    OR              reduce using rule 61 (Factor -> ( ExpA ) .)
+
+
+state 92
+
+    (31) AtrFun -> id = id ( . )
+
+    )               shift and go to state 113
+
+
+state 93
+
+    (29) AtrArrayVar -> id [ id ] . = ExpA
+
+    =               shift and go to state 114
+
+
+state 94
+
+    (28) AtrArray -> id [ number ] . = ExpA
+    (30) AtrArrayBi -> id [ number ] . [ number ] = ExpA
+
+    =               shift and go to state 116
+    [               shift and go to state 115
+
+
+state 95
+
+    (20) Instrucao -> READ id [ id . ] ;
+
+    ]               shift and go to state 117
+
+
+state 96
+
+    (19) Instrucao -> READ id [ number . ] ;
+
+    ]               shift and go to state 118
+
+
+state 97
+
+    (33) Condicional -> IF ( Condicao ) . { BlocoInstrucoes }
+    (34) Condicional -> IF ( Condicao ) . { BlocoInstrucoes } ELSE { BlocoInstrucoes }
+
+    {               shift and go to state 119
+
+
+state 98
+
+    (39) ExpLogOr -> ExpLogOr OR . ExpLogAnd
+    (40) ExpLogAnd -> . ExpLogNot
+    (41) ExpLogAnd -> . ExpLogAnd AND ExpLogOr
+    (42) ExpLogNot -> . ExpEq
+    (43) ExpLogNot -> . NOT Condicao
+    (44) ExpEq -> . ExpRel
+    (45) ExpEq -> . ExpEq EQ ExpRel
+    (46) ExpEq -> . ExpEq NE ExpRel
+    (47) ExpRel -> . ExpA
+    (48) ExpRel -> . ExpRel > ExpA
+    (49) ExpRel -> . ExpRel < ExpA
+    (50) ExpRel -> . ExpRel GE ExpA
+    (51) ExpRel -> . ExpRel LE ExpA
+    (52) ExpA -> . ExpA + Term
+    (53) ExpA -> . ExpA - Term
+    (54) ExpA -> . Term
+    (55) Term -> . Term * Factor
+    (56) Term -> . Term / Factor
+    (57) Term -> . Term % Factor
+    (58) Term -> . Factor
+    (59) Factor -> . id
+    (60) Factor -> . number
+    (61) Factor -> . ( ExpA )
+    (62) Factor -> . id [ id ]
+    (63) Factor -> . id [ number ]
+    (64) Factor -> . id [ number ] [ number ]
+    (65) Factor -> . TRUE
+    (66) Factor -> . FALSE
+
+    NOT             shift and go to state 77
+    id              shift and go to state 41
+    number          shift and go to state 42
+    (               shift and go to state 43
+    TRUE            shift and go to state 44
+    FALSE           shift and go to state 45
+
+    ExpLogAnd                      shift and go to state 120
+    ExpLogNot                      shift and go to state 75
+    ExpEq                          shift and go to state 76
+    ExpRel                         shift and go to state 78
+    ExpA                           shift and go to state 79
+    Term                           shift and go to state 39
+    Factor                         shift and go to state 40
+
+state 99
+
+    (41) ExpLogAnd -> ExpLogAnd AND . ExpLogOr
+    (38) ExpLogOr -> . ExpLogAnd
+    (39) ExpLogOr -> . ExpLogOr OR ExpLogAnd
+    (40) ExpLogAnd -> . ExpLogNot
+    (41) ExpLogAnd -> . ExpLogAnd AND ExpLogOr
+    (42) ExpLogNot -> . ExpEq
+    (43) ExpLogNot -> . NOT Condicao
+    (44) ExpEq -> . ExpRel
+    (45) ExpEq -> . ExpEq EQ ExpRel
+    (46) ExpEq -> . ExpEq NE ExpRel
+    (47) ExpRel -> . ExpA
+    (48) ExpRel -> . ExpRel > ExpA
+    (49) ExpRel -> . ExpRel < ExpA
+    (50) ExpRel -> . ExpRel GE ExpA
+    (51) ExpRel -> . ExpRel LE ExpA
+    (52) ExpA -> . ExpA + Term
+    (53) ExpA -> . ExpA - Term
+    (54) ExpA -> . Term
+    (55) Term -> . Term * Factor
+    (56) Term -> . Term / Factor
+    (57) Term -> . Term % Factor
+    (58) Term -> . Factor
+    (59) Factor -> . id
+    (60) Factor -> . number
+    (61) Factor -> . ( ExpA )
+    (62) Factor -> . id [ id ]
+    (63) Factor -> . id [ number ]
+    (64) Factor -> . id [ number ] [ number ]
+    (65) Factor -> . TRUE
+    (66) Factor -> . FALSE
+
+    NOT             shift and go to state 77
+    id              shift and go to state 41
+    number          shift and go to state 42
+    (               shift and go to state 43
+    TRUE            shift and go to state 44
+    FALSE           shift and go to state 45
+
+    ExpLogAnd                      shift and go to state 74
+    ExpLogOr                       shift and go to state 121
+    ExpLogNot                      shift and go to state 75
+    ExpEq                          shift and go to state 76
+    ExpRel                         shift and go to state 78
+    ExpA                           shift and go to state 79
+    Term                           shift and go to state 39
+    Factor                         shift and go to state 40
+
+state 100
+
+    (45) ExpEq -> ExpEq EQ . ExpRel
+    (47) ExpRel -> . ExpA
+    (48) ExpRel -> . ExpRel > ExpA
+    (49) ExpRel -> . ExpRel < ExpA
+    (50) ExpRel -> . ExpRel GE ExpA
+    (51) ExpRel -> . ExpRel LE ExpA
+    (52) ExpA -> . ExpA + Term
+    (53) ExpA -> . ExpA - Term
+    (54) ExpA -> . Term
+    (55) Term -> . Term * Factor
+    (56) Term -> . Term / Factor
+    (57) Term -> . Term % Factor
+    (58) Term -> . Factor
+    (59) Factor -> . id
+    (60) Factor -> . number
+    (61) Factor -> . ( ExpA )
+    (62) Factor -> . id [ id ]
+    (63) Factor -> . id [ number ]
+    (64) Factor -> . id [ number ] [ number ]
+    (65) Factor -> . TRUE
+    (66) Factor -> . FALSE
+
+    id              shift and go to state 41
+    number          shift and go to state 42
+    (               shift and go to state 43
+    TRUE            shift and go to state 44
+    FALSE           shift and go to state 45
+
+    ExpRel                         shift and go to state 122
+    ExpA                           shift and go to state 79
+    Term                           shift and go to state 39
+    Factor                         shift and go to state 40
+
+state 101
+
+    (46) ExpEq -> ExpEq NE . ExpRel
+    (47) ExpRel -> . ExpA
+    (48) ExpRel -> . ExpRel > ExpA
+    (49) ExpRel -> . ExpRel < ExpA
+    (50) ExpRel -> . ExpRel GE ExpA
+    (51) ExpRel -> . ExpRel LE ExpA
+    (52) ExpA -> . ExpA + Term
+    (53) ExpA -> . ExpA - Term
+    (54) ExpA -> . Term
+    (55) Term -> . Term * Factor
+    (56) Term -> . Term / Factor
+    (57) Term -> . Term % Factor
+    (58) Term -> . Factor
+    (59) Factor -> . id
+    (60) Factor -> . number
+    (61) Factor -> . ( ExpA )
+    (62) Factor -> . id [ id ]
+    (63) Factor -> . id [ number ]
+    (64) Factor -> . id [ number ] [ number ]
+    (65) Factor -> . TRUE
+    (66) Factor -> . FALSE
+
+    id              shift and go to state 41
+    number          shift and go to state 42
+    (               shift and go to state 43
+    TRUE            shift and go to state 44
+    FALSE           shift and go to state 45
+
+    ExpRel                         shift and go to state 123
+    ExpA                           shift and go to state 79
+    Term                           shift and go to state 39
+    Factor                         shift and go to state 40
+
+state 102
+
+    (43) ExpLogNot -> NOT Condicao .
+
+    AND             reduce using rule 43 (ExpLogNot -> NOT Condicao .)
+    OR              reduce using rule 43 (ExpLogNot -> NOT Condicao .)
+    )               reduce using rule 43 (ExpLogNot -> NOT Condicao .)
+
+
+state 103
+
+    (48) ExpRel -> ExpRel > . ExpA
+    (52) ExpA -> . ExpA + Term
+    (53) ExpA -> . ExpA - Term
+    (54) ExpA -> . Term
+    (55) Term -> . Term * Factor
+    (56) Term -> . Term / Factor
+    (57) Term -> . Term % Factor
+    (58) Term -> . Factor
+    (59) Factor -> . id
+    (60) Factor -> . number
+    (61) Factor -> . ( ExpA )
+    (62) Factor -> . id [ id ]
+    (63) Factor -> . id [ number ]
+    (64) Factor -> . id [ number ] [ number ]
+    (65) Factor -> . TRUE
+    (66) Factor -> . FALSE
+
+    id              shift and go to state 41
+    number          shift and go to state 42
+    (               shift and go to state 43
+    TRUE            shift and go to state 44
+    FALSE           shift and go to state 45
+
+    ExpA                           shift and go to state 124
+    Term                           shift and go to state 39
+    Factor                         shift and go to state 40
+
+state 104
+
+    (49) ExpRel -> ExpRel < . ExpA
+    (52) ExpA -> . ExpA + Term
+    (53) ExpA -> . ExpA - Term
+    (54) ExpA -> . Term
+    (55) Term -> . Term * Factor
+    (56) Term -> . Term / Factor
+    (57) Term -> . Term % Factor
+    (58) Term -> . Factor
+    (59) Factor -> . id
+    (60) Factor -> . number
+    (61) Factor -> . ( ExpA )
+    (62) Factor -> . id [ id ]
+    (63) Factor -> . id [ number ]
+    (64) Factor -> . id [ number ] [ number ]
+    (65) Factor -> . TRUE
+    (66) Factor -> . FALSE
+
+    id              shift and go to state 41
+    number          shift and go to state 42
+    (               shift and go to state 43
+    TRUE            shift and go to state 44
+    FALSE           shift and go to state 45
+
+    ExpA                           shift and go to state 125
+    Term                           shift and go to state 39
+    Factor                         shift and go to state 40
+
+state 105
+
+    (50) ExpRel -> ExpRel GE . ExpA
+    (52) ExpA -> . ExpA + Term
+    (53) ExpA -> . ExpA - Term
+    (54) ExpA -> . Term
+    (55) Term -> . Term * Factor
+    (56) Term -> . Term / Factor
+    (57) Term -> . Term % Factor
+    (58) Term -> . Factor
+    (59) Factor -> . id
+    (60) Factor -> . number
+    (61) Factor -> . ( ExpA )
+    (62) Factor -> . id [ id ]
+    (63) Factor -> . id [ number ]
+    (64) Factor -> . id [ number ] [ number ]
+    (65) Factor -> . TRUE
+    (66) Factor -> . FALSE
+
+    id              shift and go to state 41
+    number          shift and go to state 42
+    (               shift and go to state 43
+    TRUE            shift and go to state 44
+    FALSE           shift and go to state 45
+
+    ExpA                           shift and go to state 126
+    Term                           shift and go to state 39
+    Factor                         shift and go to state 40
+
+state 106
+
+    (51) ExpRel -> ExpRel LE . ExpA
+    (52) ExpA -> . ExpA + Term
+    (53) ExpA -> . ExpA - Term
+    (54) ExpA -> . Term
+    (55) Term -> . Term * Factor
+    (56) Term -> . Term / Factor
+    (57) Term -> . Term % Factor
+    (58) Term -> . Factor
+    (59) Factor -> . id
+    (60) Factor -> . number
+    (61) Factor -> . ( ExpA )
+    (62) Factor -> . id [ id ]
+    (63) Factor -> . id [ number ]
+    (64) Factor -> . id [ number ] [ number ]
+    (65) Factor -> . TRUE
+    (66) Factor -> . FALSE
+
+    id              shift and go to state 41
+    number          shift and go to state 42
+    (               shift and go to state 43
+    TRUE            shift and go to state 44
+    FALSE           shift and go to state 45
+
+    ExpA                           shift and go to state 127
+    Term                           shift and go to state 39
+    Factor                         shift and go to state 40
+
+state 107
+
+    (35) Condicional -> REPEAT { BlocoInstrucoes } . UNTIL ( Condicao )
+
+    UNTIL           shift and go to state 128
+
+
+state 108
+
+    (36) Condicional -> WHILE ( Condicao ) . DO { BlocoInstrucoes }
+
+    DO              shift and go to state 129
+
+
+state 109
+
+    (13) DeclArrayBi -> INT id [ number ] [ . number ]
+
+    number          shift and go to state 130
+
+
+state 110
+
+    (14) DeclFun -> FUNCTION id ( ) { BlocoInstrucoes . RETURN ExpRel ; }
+    (5) BlocoInstrucoes -> BlocoInstrucoes . Instrucao
+    (15) Instrucao -> . DUMP
+    (16) Instrucao -> . PRINT ExpA ;
+    (17) Instrucao -> . PRINTA id ;
+    (18) Instrucao -> . READ id ;
+    (19) Instrucao -> . READ id [ number ] ;
+    (20) Instrucao -> . READ id [ id ] ;
+    (21) Instrucao -> . Atribuicao ;
+    (32) Instrucao -> . Condicional
+    (22) Atribuicao -> . AtrVar
+    (23) Atribuicao -> . AtrArray
+    (24) Atribuicao -> . AtrArrayVar
+    (25) Atribuicao -> . AtrArrayBi
+    (26) Atribuicao -> . AtrFun
+    (33) Condicional -> . IF ( Condicao ) { BlocoInstrucoes }
+    (34) Condicional -> . IF ( Condicao ) { BlocoInstrucoes } ELSE { BlocoInstrucoes }
+    (35) Condicional -> . REPEAT { BlocoInstrucoes } UNTIL ( Condicao )
+    (36) Condicional -> . WHILE ( Condicao ) DO { BlocoInstrucoes }
+    (27) AtrVar -> . id = ExpA
+    (28) AtrArray -> . id [ number ] = ExpA
+    (29) AtrArrayVar -> . id [ id ] = ExpA
+    (30) AtrArrayBi -> . id [ number ] [ number ] = ExpA
+    (31) AtrFun -> . id = id ( )
+
+    RETURN          shift and go to state 131
+    DUMP            shift and go to state 19
+    PRINT           shift and go to state 20
+    PRINTA          shift and go to state 21
+    READ            shift and go to state 23
+    IF              shift and go to state 31
+    REPEAT          shift and go to state 32
+    WHILE           shift and go to state 33
+    id              shift and go to state 22
+
+    Instrucao                      shift and go to state 37
+    Atribuicao                     shift and go to state 24
+    Condicional                    shift and go to state 25
+    AtrVar                         shift and go to state 26
+    AtrArray                       shift and go to state 27
+    AtrArrayVar                    shift and go to state 28
+    AtrArrayBi                     shift and go to state 29
+    AtrFun                         shift and go to state 30
+
+state 111
+
+    (62) Factor -> id [ id ] .
+
+    *               reduce using rule 62 (Factor -> id [ id ] .)
+    /               reduce using rule 62 (Factor -> id [ id ] .)
+    %               reduce using rule 62 (Factor -> id [ id ] .)
+    ;               reduce using rule 62 (Factor -> id [ id ] .)
+    +               reduce using rule 62 (Factor -> id [ id ] .)
+    -               reduce using rule 62 (Factor -> id [ id ] .)
+    )               reduce using rule 62 (Factor -> id [ id ] .)
+    >               reduce using rule 62 (Factor -> id [ id ] .)
+    <               reduce using rule 62 (Factor -> id [ id ] .)
+    GE              reduce using rule 62 (Factor -> id [ id ] .)
+    LE              reduce using rule 62 (Factor -> id [ id ] .)
+    EQ              reduce using rule 62 (Factor -> id [ id ] .)
+    NE              reduce using rule 62 (Factor -> id [ id ] .)
+    AND             reduce using rule 62 (Factor -> id [ id ] .)
+    OR              reduce using rule 62 (Factor -> id [ id ] .)
+
+
+state 112
+
+    (63) Factor -> id [ number ] .
+    (64) Factor -> id [ number ] . [ number ]
+
+    *               reduce using rule 63 (Factor -> id [ number ] .)
+    /               reduce using rule 63 (Factor -> id [ number ] .)
+    %               reduce using rule 63 (Factor -> id [ number ] .)
+    ;               reduce using rule 63 (Factor -> id [ number ] .)
+    +               reduce using rule 63 (Factor -> id [ number ] .)
+    -               reduce using rule 63 (Factor -> id [ number ] .)
+    )               reduce using rule 63 (Factor -> id [ number ] .)
+    >               reduce using rule 63 (Factor -> id [ number ] .)
+    <               reduce using rule 63 (Factor -> id [ number ] .)
+    GE              reduce using rule 63 (Factor -> id [ number ] .)
+    LE              reduce using rule 63 (Factor -> id [ number ] .)
+    EQ              reduce using rule 63 (Factor -> id [ number ] .)
+    NE              reduce using rule 63 (Factor -> id [ number ] .)
+    AND             reduce using rule 63 (Factor -> id [ number ] .)
+    OR              reduce using rule 63 (Factor -> id [ number ] .)
+    [               shift and go to state 132
+
+
+state 113
+
+    (31) AtrFun -> id = id ( ) .
+
+    ;               reduce using rule 31 (AtrFun -> id = id ( ) .)
+
+
+state 114
+
+    (29) AtrArrayVar -> id [ id ] = . ExpA
+    (52) ExpA -> . ExpA + Term
+    (53) ExpA -> . ExpA - Term
+    (54) ExpA -> . Term
+    (55) Term -> . Term * Factor
+    (56) Term -> . Term / Factor
+    (57) Term -> . Term % Factor
+    (58) Term -> . Factor
+    (59) Factor -> . id
+    (60) Factor -> . number
+    (61) Factor -> . ( ExpA )
+    (62) Factor -> . id [ id ]
+    (63) Factor -> . id [ number ]
+    (64) Factor -> . id [ number ] [ number ]
+    (65) Factor -> . TRUE
+    (66) Factor -> . FALSE
+
+    id              shift and go to state 41
+    number          shift and go to state 42
+    (               shift and go to state 43
+    TRUE            shift and go to state 44
+    FALSE           shift and go to state 45
+
+    ExpA                           shift and go to state 133
+    Term                           shift and go to state 39
+    Factor                         shift and go to state 40
+
+state 115
+
+    (30) AtrArrayBi -> id [ number ] [ . number ] = ExpA
+
+    number          shift and go to state 134
+
+
+state 116
+
+    (28) AtrArray -> id [ number ] = . ExpA
+    (52) ExpA -> . ExpA + Term
+    (53) ExpA -> . ExpA - Term
+    (54) ExpA -> . Term
+    (55) Term -> . Term * Factor
+    (56) Term -> . Term / Factor
+    (57) Term -> . Term % Factor
+    (58) Term -> . Factor
+    (59) Factor -> . id
+    (60) Factor -> . number
+    (61) Factor -> . ( ExpA )
+    (62) Factor -> . id [ id ]
+    (63) Factor -> . id [ number ]
+    (64) Factor -> . id [ number ] [ number ]
+    (65) Factor -> . TRUE
+    (66) Factor -> . FALSE
+
+    id              shift and go to state 41
+    number          shift and go to state 42
+    (               shift and go to state 43
+    TRUE            shift and go to state 44
+    FALSE           shift and go to state 45
+
+    ExpA                           shift and go to state 135
+    Term                           shift and go to state 39
+    Factor                         shift and go to state 40
+
+state 117
+
+    (20) Instrucao -> READ id [ id ] . ;
+
+    ;               shift and go to state 136
+
+
+state 118
+
+    (19) Instrucao -> READ id [ number ] . ;
+
+    ;               shift and go to state 137
+
+
+state 119
+
+    (33) Condicional -> IF ( Condicao ) { . BlocoInstrucoes }
+    (34) Condicional -> IF ( Condicao ) { . BlocoInstrucoes } ELSE { BlocoInstrucoes }
+    (4) BlocoInstrucoes -> . Instrucao
+    (5) BlocoInstrucoes -> . BlocoInstrucoes Instrucao
+    (15) Instrucao -> . DUMP
+    (16) Instrucao -> . PRINT ExpA ;
+    (17) Instrucao -> . PRINTA id ;
+    (18) Instrucao -> . READ id ;
+    (19) Instrucao -> . READ id [ number ] ;
+    (20) Instrucao -> . READ id [ id ] ;
+    (21) Instrucao -> . Atribuicao ;
+    (32) Instrucao -> . Condicional
+    (22) Atribuicao -> . AtrVar
+    (23) Atribuicao -> . AtrArray
+    (24) Atribuicao -> . AtrArrayVar
+    (25) Atribuicao -> . AtrArrayBi
+    (26) Atribuicao -> . AtrFun
+    (33) Condicional -> . IF ( Condicao ) { BlocoInstrucoes }
+    (34) Condicional -> . IF ( Condicao ) { BlocoInstrucoes } ELSE { BlocoInstrucoes }
+    (35) Condicional -> . REPEAT { BlocoInstrucoes } UNTIL ( Condicao )
+    (36) Condicional -> . WHILE ( Condicao ) DO { BlocoInstrucoes }
+    (27) AtrVar -> . id = ExpA
+    (28) AtrArray -> . id [ number ] = ExpA
+    (29) AtrArrayVar -> . id [ id ] = ExpA
+    (30) AtrArrayBi -> . id [ number ] [ number ] = ExpA
+    (31) AtrFun -> . id = id ( )
+
+    DUMP            shift and go to state 19
+    PRINT           shift and go to state 20
+    PRINTA          shift and go to state 21
+    READ            shift and go to state 23
+    IF              shift and go to state 31
+    REPEAT          shift and go to state 32
+    WHILE           shift and go to state 33
+    id              shift and go to state 22
+
+    BlocoInstrucoes                shift and go to state 138
+    Instrucao                      shift and go to state 18
+    Atribuicao                     shift and go to state 24
+    Condicional                    shift and go to state 25
+    AtrVar                         shift and go to state 26
+    AtrArray                       shift and go to state 27
+    AtrArrayVar                    shift and go to state 28
+    AtrArrayBi                     shift and go to state 29
+    AtrFun                         shift and go to state 30
+
+state 120
+
+    (39) ExpLogOr -> ExpLogOr OR ExpLogAnd .
+    (41) ExpLogAnd -> ExpLogAnd . AND ExpLogOr
+
+  ! shift/reduce conflict for AND resolved as shift
+    OR              reduce using rule 39 (ExpLogOr -> ExpLogOr OR ExpLogAnd .)
+    )               reduce using rule 39 (ExpLogOr -> ExpLogOr OR ExpLogAnd .)
+    AND             shift and go to state 99
+
+  ! AND             [ reduce using rule 39 (ExpLogOr -> ExpLogOr OR ExpLogAnd .) ]
+
+
+state 121
+
+    (41) ExpLogAnd -> ExpLogAnd AND ExpLogOr .
+    (39) ExpLogOr -> ExpLogOr . OR ExpLogAnd
+
+  ! shift/reduce conflict for OR resolved as shift
+    AND             reduce using rule 41 (ExpLogAnd -> ExpLogAnd AND ExpLogOr .)
+    )               reduce using rule 41 (ExpLogAnd -> ExpLogAnd AND ExpLogOr .)
+    OR              shift and go to state 98
+
+  ! OR              [ reduce using rule 41 (ExpLogAnd -> ExpLogAnd AND ExpLogOr .) ]
+
+
+state 122
+
+    (45) ExpEq -> ExpEq EQ ExpRel .
+    (48) ExpRel -> ExpRel . > ExpA
+    (49) ExpRel -> ExpRel . < ExpA
+    (50) ExpRel -> ExpRel . GE ExpA
+    (51) ExpRel -> ExpRel . LE ExpA
+
+    EQ              reduce using rule 45 (ExpEq -> ExpEq EQ ExpRel .)
+    NE              reduce using rule 45 (ExpEq -> ExpEq EQ ExpRel .)
+    AND             reduce using rule 45 (ExpEq -> ExpEq EQ ExpRel .)
+    OR              reduce using rule 45 (ExpEq -> ExpEq EQ ExpRel .)
+    )               reduce using rule 45 (ExpEq -> ExpEq EQ ExpRel .)
+    >               shift and go to state 103
+    <               shift and go to state 104
+    GE              shift and go to state 105
+    LE              shift and go to state 106
+
+
+state 123
+
+    (46) ExpEq -> ExpEq NE ExpRel .
+    (48) ExpRel -> ExpRel . > ExpA
+    (49) ExpRel -> ExpRel . < ExpA
+    (50) ExpRel -> ExpRel . GE ExpA
+    (51) ExpRel -> ExpRel . LE ExpA
+
+    EQ              reduce using rule 46 (ExpEq -> ExpEq NE ExpRel .)
+    NE              reduce using rule 46 (ExpEq -> ExpEq NE ExpRel .)
+    AND             reduce using rule 46 (ExpEq -> ExpEq NE ExpRel .)
+    OR              reduce using rule 46 (ExpEq -> ExpEq NE ExpRel .)
+    )               reduce using rule 46 (ExpEq -> ExpEq NE ExpRel .)
+    >               shift and go to state 103
+    <               shift and go to state 104
+    GE              shift and go to state 105
+    LE              shift and go to state 106
+
+
+state 124
+
+    (48) ExpRel -> ExpRel > ExpA .
+    (52) ExpA -> ExpA . + Term
+    (53) ExpA -> ExpA . - Term
+
+    >               reduce using rule 48 (ExpRel -> ExpRel > ExpA .)
+    <               reduce using rule 48 (ExpRel -> ExpRel > ExpA .)
+    GE              reduce using rule 48 (ExpRel -> ExpRel > ExpA .)
+    LE              reduce using rule 48 (ExpRel -> ExpRel > ExpA .)
+    EQ              reduce using rule 48 (ExpRel -> ExpRel > ExpA .)
+    NE              reduce using rule 48 (ExpRel -> ExpRel > ExpA .)
+    AND             reduce using rule 48 (ExpRel -> ExpRel > ExpA .)
+    OR              reduce using rule 48 (ExpRel -> ExpRel > ExpA .)
+    )               reduce using rule 48 (ExpRel -> ExpRel > ExpA .)
+    ;               reduce using rule 48 (ExpRel -> ExpRel > ExpA .)
+    +               shift and go to state 58
+    -               shift and go to state 59
+
+
+state 125
+
+    (49) ExpRel -> ExpRel < ExpA .
+    (52) ExpA -> ExpA . + Term
+    (53) ExpA -> ExpA . - Term
+
+    >               reduce using rule 49 (ExpRel -> ExpRel < ExpA .)
+    <               reduce using rule 49 (ExpRel -> ExpRel < ExpA .)
+    GE              reduce using rule 49 (ExpRel -> ExpRel < ExpA .)
+    LE              reduce using rule 49 (ExpRel -> ExpRel < ExpA .)
+    EQ              reduce using rule 49 (ExpRel -> ExpRel < ExpA .)
+    NE              reduce using rule 49 (ExpRel -> ExpRel < ExpA .)
+    AND             reduce using rule 49 (ExpRel -> ExpRel < ExpA .)
+    OR              reduce using rule 49 (ExpRel -> ExpRel < ExpA .)
+    )               reduce using rule 49 (ExpRel -> ExpRel < ExpA .)
+    ;               reduce using rule 49 (ExpRel -> ExpRel < ExpA .)
+    +               shift and go to state 58
+    -               shift and go to state 59
+
+
+state 126
+
+    (50) ExpRel -> ExpRel GE ExpA .
+    (52) ExpA -> ExpA . + Term
+    (53) ExpA -> ExpA . - Term
+
+    >               reduce using rule 50 (ExpRel -> ExpRel GE ExpA .)
+    <               reduce using rule 50 (ExpRel -> ExpRel GE ExpA .)
+    GE              reduce using rule 50 (ExpRel -> ExpRel GE ExpA .)
+    LE              reduce using rule 50 (ExpRel -> ExpRel GE ExpA .)
+    EQ              reduce using rule 50 (ExpRel -> ExpRel GE ExpA .)
+    NE              reduce using rule 50 (ExpRel -> ExpRel GE ExpA .)
+    AND             reduce using rule 50 (ExpRel -> ExpRel GE ExpA .)
+    OR              reduce using rule 50 (ExpRel -> ExpRel GE ExpA .)
+    )               reduce using rule 50 (ExpRel -> ExpRel GE ExpA .)
+    ;               reduce using rule 50 (ExpRel -> ExpRel GE ExpA .)
+    +               shift and go to state 58
+    -               shift and go to state 59
+
+
+state 127
+
+    (51) ExpRel -> ExpRel LE ExpA .
+    (52) ExpA -> ExpA . + Term
+    (53) ExpA -> ExpA . - Term
+
+    >               reduce using rule 51 (ExpRel -> ExpRel LE ExpA .)
+    <               reduce using rule 51 (ExpRel -> ExpRel LE ExpA .)
+    GE              reduce using rule 51 (ExpRel -> ExpRel LE ExpA .)
+    LE              reduce using rule 51 (ExpRel -> ExpRel LE ExpA .)
+    EQ              reduce using rule 51 (ExpRel -> ExpRel LE ExpA .)
+    NE              reduce using rule 51 (ExpRel -> ExpRel LE ExpA .)
+    AND             reduce using rule 51 (ExpRel -> ExpRel LE ExpA .)
+    OR              reduce using rule 51 (ExpRel -> ExpRel LE ExpA .)
+    )               reduce using rule 51 (ExpRel -> ExpRel LE ExpA .)
+    ;               reduce using rule 51 (ExpRel -> ExpRel LE ExpA .)
+    +               shift and go to state 58
+    -               shift and go to state 59
+
+
+state 128
+
+    (35) Condicional -> REPEAT { BlocoInstrucoes } UNTIL . ( Condicao )
+
+    (               shift and go to state 139
+
+
+state 129
+
+    (36) Condicional -> WHILE ( Condicao ) DO . { BlocoInstrucoes }
+
+    {               shift and go to state 140
+
+
+state 130
+
+    (13) DeclArrayBi -> INT id [ number ] [ number . ]
+
+    ]               shift and go to state 141
+
+
+state 131
+
+    (14) DeclFun -> FUNCTION id ( ) { BlocoInstrucoes RETURN . ExpRel ; }
+    (47) ExpRel -> . ExpA
+    (48) ExpRel -> . ExpRel > ExpA
+    (49) ExpRel -> . ExpRel < ExpA
+    (50) ExpRel -> . ExpRel GE ExpA
+    (51) ExpRel -> . ExpRel LE ExpA
+    (52) ExpA -> . ExpA + Term
+    (53) ExpA -> . ExpA - Term
+    (54) ExpA -> . Term
+    (55) Term -> . Term * Factor
+    (56) Term -> . Term / Factor
+    (57) Term -> . Term % Factor
+    (58) Term -> . Factor
+    (59) Factor -> . id
+    (60) Factor -> . number
+    (61) Factor -> . ( ExpA )
+    (62) Factor -> . id [ id ]
+    (63) Factor -> . id [ number ]
+    (64) Factor -> . id [ number ] [ number ]
+    (65) Factor -> . TRUE
+    (66) Factor -> . FALSE
+
+    id              shift and go to state 41
+    number          shift and go to state 42
+    (               shift and go to state 43
+    TRUE            shift and go to state 44
+    FALSE           shift and go to state 45
+
+    ExpRel                         shift and go to state 142
+    ExpA                           shift and go to state 79
+    Term                           shift and go to state 39
+    Factor                         shift and go to state 40
+
+state 132
+
+    (64) Factor -> id [ number ] [ . number ]
+
+    number          shift and go to state 143
+
+
+state 133
+
+    (29) AtrArrayVar -> id [ id ] = ExpA .
+    (52) ExpA -> ExpA . + Term
+    (53) ExpA -> ExpA . - Term
+
+    ;               reduce using rule 29 (AtrArrayVar -> id [ id ] = ExpA .)
+    +               shift and go to state 58
+    -               shift and go to state 59
+
+
+state 134
+
+    (30) AtrArrayBi -> id [ number ] [ number . ] = ExpA
+
+    ]               shift and go to state 144
+
+
+state 135
+
+    (28) AtrArray -> id [ number ] = ExpA .
+    (52) ExpA -> ExpA . + Term
+    (53) ExpA -> ExpA . - Term
+
+    ;               reduce using rule 28 (AtrArray -> id [ number ] = ExpA .)
+    +               shift and go to state 58
+    -               shift and go to state 59
+
+
+state 136
+
+    (20) Instrucao -> READ id [ id ] ; .
+
+    DUMP            reduce using rule 20 (Instrucao -> READ id [ id ] ; .)
+    PRINT           reduce using rule 20 (Instrucao -> READ id [ id ] ; .)
+    PRINTA          reduce using rule 20 (Instrucao -> READ id [ id ] ; .)
+    READ            reduce using rule 20 (Instrucao -> READ id [ id ] ; .)
+    IF              reduce using rule 20 (Instrucao -> READ id [ id ] ; .)
+    REPEAT          reduce using rule 20 (Instrucao -> READ id [ id ] ; .)
+    WHILE           reduce using rule 20 (Instrucao -> READ id [ id ] ; .)
+    id              reduce using rule 20 (Instrucao -> READ id [ id ] ; .)
+    $end            reduce using rule 20 (Instrucao -> READ id [ id ] ; .)
+    }               reduce using rule 20 (Instrucao -> READ id [ id ] ; .)
+    RETURN          reduce using rule 20 (Instrucao -> READ id [ id ] ; .)
+
+
+state 137
+
+    (19) Instrucao -> READ id [ number ] ; .
+
+    DUMP            reduce using rule 19 (Instrucao -> READ id [ number ] ; .)
+    PRINT           reduce using rule 19 (Instrucao -> READ id [ number ] ; .)
+    PRINTA          reduce using rule 19 (Instrucao -> READ id [ number ] ; .)
+    READ            reduce using rule 19 (Instrucao -> READ id [ number ] ; .)
+    IF              reduce using rule 19 (Instrucao -> READ id [ number ] ; .)
+    REPEAT          reduce using rule 19 (Instrucao -> READ id [ number ] ; .)
+    WHILE           reduce using rule 19 (Instrucao -> READ id [ number ] ; .)
+    id              reduce using rule 19 (Instrucao -> READ id [ number ] ; .)
+    $end            reduce using rule 19 (Instrucao -> READ id [ number ] ; .)
+    }               reduce using rule 19 (Instrucao -> READ id [ number ] ; .)
+    RETURN          reduce using rule 19 (Instrucao -> READ id [ number ] ; .)
+
+
+state 138
+
+    (33) Condicional -> IF ( Condicao ) { BlocoInstrucoes . }
+    (34) Condicional -> IF ( Condicao ) { BlocoInstrucoes . } ELSE { BlocoInstrucoes }
+    (5) BlocoInstrucoes -> BlocoInstrucoes . Instrucao
+    (15) Instrucao -> . DUMP
+    (16) Instrucao -> . PRINT ExpA ;
+    (17) Instrucao -> . PRINTA id ;
+    (18) Instrucao -> . READ id ;
+    (19) Instrucao -> . READ id [ number ] ;
+    (20) Instrucao -> . READ id [ id ] ;
+    (21) Instrucao -> . Atribuicao ;
+    (32) Instrucao -> . Condicional
+    (22) Atribuicao -> . AtrVar
+    (23) Atribuicao -> . AtrArray
+    (24) Atribuicao -> . AtrArrayVar
+    (25) Atribuicao -> . AtrArrayBi
+    (26) Atribuicao -> . AtrFun
+    (33) Condicional -> . IF ( Condicao ) { BlocoInstrucoes }
+    (34) Condicional -> . IF ( Condicao ) { BlocoInstrucoes } ELSE { BlocoInstrucoes }
+    (35) Condicional -> . REPEAT { BlocoInstrucoes } UNTIL ( Condicao )
+    (36) Condicional -> . WHILE ( Condicao ) DO { BlocoInstrucoes }
+    (27) AtrVar -> . id = ExpA
+    (28) AtrArray -> . id [ number ] = ExpA
+    (29) AtrArrayVar -> . id [ id ] = ExpA
+    (30) AtrArrayBi -> . id [ number ] [ number ] = ExpA
+    (31) AtrFun -> . id = id ( )
+
+    }               shift and go to state 145
+    DUMP            shift and go to state 19
+    PRINT           shift and go to state 20
+    PRINTA          shift and go to state 21
+    READ            shift and go to state 23
+    IF              shift and go to state 31
+    REPEAT          shift and go to state 32
+    WHILE           shift and go to state 33
+    id              shift and go to state 22
+
+    Instrucao                      shift and go to state 37
+    Atribuicao                     shift and go to state 24
+    Condicional                    shift and go to state 25
+    AtrVar                         shift and go to state 26
+    AtrArray                       shift and go to state 27
+    AtrArrayVar                    shift and go to state 28
+    AtrArrayBi                     shift and go to state 29
+    AtrFun                         shift and go to state 30
+
+state 139
+
+    (35) Condicional -> REPEAT { BlocoInstrucoes } UNTIL ( . Condicao )
+    (37) Condicao -> . ExpLogOr
+    (38) ExpLogOr -> . ExpLogAnd
+    (39) ExpLogOr -> . ExpLogOr OR ExpLogAnd
+    (40) ExpLogAnd -> . ExpLogNot
+    (41) ExpLogAnd -> . ExpLogAnd AND ExpLogOr
+    (42) ExpLogNot -> . ExpEq
+    (43) ExpLogNot -> . NOT Condicao
+    (44) ExpEq -> . ExpRel
+    (45) ExpEq -> . ExpEq EQ ExpRel
+    (46) ExpEq -> . ExpEq NE ExpRel
+    (47) ExpRel -> . ExpA
+    (48) ExpRel -> . ExpRel > ExpA
+    (49) ExpRel -> . ExpRel < ExpA
+    (50) ExpRel -> . ExpRel GE ExpA
+    (51) ExpRel -> . ExpRel LE ExpA
+    (52) ExpA -> . ExpA + Term
+    (53) ExpA -> . ExpA - Term
+    (54) ExpA -> . Term
+    (55) Term -> . Term * Factor
+    (56) Term -> . Term / Factor
+    (57) Term -> . Term % Factor
+    (58) Term -> . Factor
+    (59) Factor -> . id
+    (60) Factor -> . number
+    (61) Factor -> . ( ExpA )
+    (62) Factor -> . id [ id ]
+    (63) Factor -> . id [ number ]
+    (64) Factor -> . id [ number ] [ number ]
+    (65) Factor -> . TRUE
+    (66) Factor -> . FALSE
+
+    NOT             shift and go to state 77
+    id              shift and go to state 41
+    number          shift and go to state 42
+    (               shift and go to state 43
+    TRUE            shift and go to state 44
+    FALSE           shift and go to state 45
+
+    Condicao                       shift and go to state 146
+    ExpLogOr                       shift and go to state 73
+    ExpLogAnd                      shift and go to state 74
+    ExpLogNot                      shift and go to state 75
+    ExpEq                          shift and go to state 76
+    ExpRel                         shift and go to state 78
+    ExpA                           shift and go to state 79
+    Term                           shift and go to state 39
+    Factor                         shift and go to state 40
+
+state 140
+
+    (36) Condicional -> WHILE ( Condicao ) DO { . BlocoInstrucoes }
+    (4) BlocoInstrucoes -> . Instrucao
+    (5) BlocoInstrucoes -> . BlocoInstrucoes Instrucao
+    (15) Instrucao -> . DUMP
+    (16) Instrucao -> . PRINT ExpA ;
+    (17) Instrucao -> . PRINTA id ;
+    (18) Instrucao -> . READ id ;
+    (19) Instrucao -> . READ id [ number ] ;
+    (20) Instrucao -> . READ id [ id ] ;
+    (21) Instrucao -> . Atribuicao ;
+    (32) Instrucao -> . Condicional
+    (22) Atribuicao -> . AtrVar
+    (23) Atribuicao -> . AtrArray
+    (24) Atribuicao -> . AtrArrayVar
+    (25) Atribuicao -> . AtrArrayBi
+    (26) Atribuicao -> . AtrFun
+    (33) Condicional -> . IF ( Condicao ) { BlocoInstrucoes }
+    (34) Condicional -> . IF ( Condicao ) { BlocoInstrucoes } ELSE { BlocoInstrucoes }
+    (35) Condicional -> . REPEAT { BlocoInstrucoes } UNTIL ( Condicao )
+    (36) Condicional -> . WHILE ( Condicao ) DO { BlocoInstrucoes }
+    (27) AtrVar -> . id = ExpA
+    (28) AtrArray -> . id [ number ] = ExpA
+    (29) AtrArrayVar -> . id [ id ] = ExpA
+    (30) AtrArrayBi -> . id [ number ] [ number ] = ExpA
+    (31) AtrFun -> . id = id ( )
+
+    DUMP            shift and go to state 19
+    PRINT           shift and go to state 20
+    PRINTA          shift and go to state 21
+    READ            shift and go to state 23
+    IF              shift and go to state 31
+    REPEAT          shift and go to state 32
+    WHILE           shift and go to state 33
+    id              shift and go to state 22
+
+    BlocoInstrucoes                shift and go to state 147
+    Instrucao                      shift and go to state 18
+    Atribuicao                     shift and go to state 24
+    Condicional                    shift and go to state 25
+    AtrVar                         shift and go to state 26
+    AtrArray                       shift and go to state 27
+    AtrArrayVar                    shift and go to state 28
+    AtrArrayBi                     shift and go to state 29
+    AtrFun                         shift and go to state 30
+
+state 141
+
+    (13) DeclArrayBi -> INT id [ number ] [ number ] .
+
+    ;               reduce using rule 13 (DeclArrayBi -> INT id [ number ] [ number ] .)
+
+
+state 142
+
+    (14) DeclFun -> FUNCTION id ( ) { BlocoInstrucoes RETURN ExpRel . ; }
+    (48) ExpRel -> ExpRel . > ExpA
+    (49) ExpRel -> ExpRel . < ExpA
+    (50) ExpRel -> ExpRel . GE ExpA
+    (51) ExpRel -> ExpRel . LE ExpA
+
+    ;               shift and go to state 148
+    >               shift and go to state 103
+    <               shift and go to state 104
+    GE              shift and go to state 105
+    LE              shift and go to state 106
+
+
+state 143
+
+    (64) Factor -> id [ number ] [ number . ]
+
+    ]               shift and go to state 149
+
+
+state 144
+
+    (30) AtrArrayBi -> id [ number ] [ number ] . = ExpA
+
+    =               shift and go to state 150
+
+
+state 145
+
+    (33) Condicional -> IF ( Condicao ) { BlocoInstrucoes } .
+    (34) Condicional -> IF ( Condicao ) { BlocoInstrucoes } . ELSE { BlocoInstrucoes }
+
+    DUMP            reduce using rule 33 (Condicional -> IF ( Condicao ) { BlocoInstrucoes } .)
+    PRINT           reduce using rule 33 (Condicional -> IF ( Condicao ) { BlocoInstrucoes } .)
+    PRINTA          reduce using rule 33 (Condicional -> IF ( Condicao ) { BlocoInstrucoes } .)
+    READ            reduce using rule 33 (Condicional -> IF ( Condicao ) { BlocoInstrucoes } .)
+    IF              reduce using rule 33 (Condicional -> IF ( Condicao ) { BlocoInstrucoes } .)
+    REPEAT          reduce using rule 33 (Condicional -> IF ( Condicao ) { BlocoInstrucoes } .)
+    WHILE           reduce using rule 33 (Condicional -> IF ( Condicao ) { BlocoInstrucoes } .)
+    id              reduce using rule 33 (Condicional -> IF ( Condicao ) { BlocoInstrucoes } .)
+    $end            reduce using rule 33 (Condicional -> IF ( Condicao ) { BlocoInstrucoes } .)
+    }               reduce using rule 33 (Condicional -> IF ( Condicao ) { BlocoInstrucoes } .)
+    RETURN          reduce using rule 33 (Condicional -> IF ( Condicao ) { BlocoInstrucoes } .)
+    ELSE            shift and go to state 151
+
+
+state 146
+
+    (35) Condicional -> REPEAT { BlocoInstrucoes } UNTIL ( Condicao . )
+
+    )               shift and go to state 152
+
+
+state 147
+
+    (36) Condicional -> WHILE ( Condicao ) DO { BlocoInstrucoes . }
+    (5) BlocoInstrucoes -> BlocoInstrucoes . Instrucao
+    (15) Instrucao -> . DUMP
+    (16) Instrucao -> . PRINT ExpA ;
+    (17) Instrucao -> . PRINTA id ;
+    (18) Instrucao -> . READ id ;
+    (19) Instrucao -> . READ id [ number ] ;
+    (20) Instrucao -> . READ id [ id ] ;
+    (21) Instrucao -> . Atribuicao ;
+    (32) Instrucao -> . Condicional
+    (22) Atribuicao -> . AtrVar
+    (23) Atribuicao -> . AtrArray
+    (24) Atribuicao -> . AtrArrayVar
+    (25) Atribuicao -> . AtrArrayBi
+    (26) Atribuicao -> . AtrFun
+    (33) Condicional -> . IF ( Condicao ) { BlocoInstrucoes }
+    (34) Condicional -> . IF ( Condicao ) { BlocoInstrucoes } ELSE { BlocoInstrucoes }
+    (35) Condicional -> . REPEAT { BlocoInstrucoes } UNTIL ( Condicao )
+    (36) Condicional -> . WHILE ( Condicao ) DO { BlocoInstrucoes }
+    (27) AtrVar -> . id = ExpA
+    (28) AtrArray -> . id [ number ] = ExpA
+    (29) AtrArrayVar -> . id [ id ] = ExpA
+    (30) AtrArrayBi -> . id [ number ] [ number ] = ExpA
+    (31) AtrFun -> . id = id ( )
+
+    }               shift and go to state 153
+    DUMP            shift and go to state 19
+    PRINT           shift and go to state 20
+    PRINTA          shift and go to state 21
+    READ            shift and go to state 23
+    IF              shift and go to state 31
+    REPEAT          shift and go to state 32
+    WHILE           shift and go to state 33
+    id              shift and go to state 22
+
+    Instrucao                      shift and go to state 37
+    Atribuicao                     shift and go to state 24
+    Condicional                    shift and go to state 25
+    AtrVar                         shift and go to state 26
+    AtrArray                       shift and go to state 27
+    AtrArrayVar                    shift and go to state 28
+    AtrArrayBi                     shift and go to state 29
+    AtrFun                         shift and go to state 30
+
+state 148
+
+    (14) DeclFun -> FUNCTION id ( ) { BlocoInstrucoes RETURN ExpRel ; . }
+
+    }               shift and go to state 154
+
+
+state 149
+
+    (64) Factor -> id [ number ] [ number ] .
+
+    *               reduce using rule 64 (Factor -> id [ number ] [ number ] .)
+    /               reduce using rule 64 (Factor -> id [ number ] [ number ] .)
+    %               reduce using rule 64 (Factor -> id [ number ] [ number ] .)
+    ;               reduce using rule 64 (Factor -> id [ number ] [ number ] .)
+    +               reduce using rule 64 (Factor -> id [ number ] [ number ] .)
+    -               reduce using rule 64 (Factor -> id [ number ] [ number ] .)
+    )               reduce using rule 64 (Factor -> id [ number ] [ number ] .)
+    >               reduce using rule 64 (Factor -> id [ number ] [ number ] .)
+    <               reduce using rule 64 (Factor -> id [ number ] [ number ] .)
+    GE              reduce using rule 64 (Factor -> id [ number ] [ number ] .)
+    LE              reduce using rule 64 (Factor -> id [ number ] [ number ] .)
+    EQ              reduce using rule 64 (Factor -> id [ number ] [ number ] .)
+    NE              reduce using rule 64 (Factor -> id [ number ] [ number ] .)
+    AND             reduce using rule 64 (Factor -> id [ number ] [ number ] .)
+    OR              reduce using rule 64 (Factor -> id [ number ] [ number ] .)
+
+
+state 150
+
+    (30) AtrArrayBi -> id [ number ] [ number ] = . ExpA
+    (52) ExpA -> . ExpA + Term
+    (53) ExpA -> . ExpA - Term
+    (54) ExpA -> . Term
+    (55) Term -> . Term * Factor
+    (56) Term -> . Term / Factor
+    (57) Term -> . Term % Factor
+    (58) Term -> . Factor
+    (59) Factor -> . id
+    (60) Factor -> . number
+    (61) Factor -> . ( ExpA )
+    (62) Factor -> . id [ id ]
+    (63) Factor -> . id [ number ]
+    (64) Factor -> . id [ number ] [ number ]
+    (65) Factor -> . TRUE
+    (66) Factor -> . FALSE
+
+    id              shift and go to state 41
+    number          shift and go to state 42
+    (               shift and go to state 43
+    TRUE            shift and go to state 44
+    FALSE           shift and go to state 45
+
+    ExpA                           shift and go to state 155
+    Term                           shift and go to state 39
+    Factor                         shift and go to state 40
+
+state 151
+
+    (34) Condicional -> IF ( Condicao ) { BlocoInstrucoes } ELSE . { BlocoInstrucoes }
+
+    {               shift and go to state 156
+
+
+state 152
+
+    (35) Condicional -> REPEAT { BlocoInstrucoes } UNTIL ( Condicao ) .
+
+    DUMP            reduce using rule 35 (Condicional -> REPEAT { BlocoInstrucoes } UNTIL ( Condicao ) .)
+    PRINT           reduce using rule 35 (Condicional -> REPEAT { BlocoInstrucoes } UNTIL ( Condicao ) .)
+    PRINTA          reduce using rule 35 (Condicional -> REPEAT { BlocoInstrucoes } UNTIL ( Condicao ) .)
+    READ            reduce using rule 35 (Condicional -> REPEAT { BlocoInstrucoes } UNTIL ( Condicao ) .)
+    IF              reduce using rule 35 (Condicional -> REPEAT { BlocoInstrucoes } UNTIL ( Condicao ) .)
+    REPEAT          reduce using rule 35 (Condicional -> REPEAT { BlocoInstrucoes } UNTIL ( Condicao ) .)
+    WHILE           reduce using rule 35 (Condicional -> REPEAT { BlocoInstrucoes } UNTIL ( Condicao ) .)
+    id              reduce using rule 35 (Condicional -> REPEAT { BlocoInstrucoes } UNTIL ( Condicao ) .)
+    $end            reduce using rule 35 (Condicional -> REPEAT { BlocoInstrucoes } UNTIL ( Condicao ) .)
+    }               reduce using rule 35 (Condicional -> REPEAT { BlocoInstrucoes } UNTIL ( Condicao ) .)
+    RETURN          reduce using rule 35 (Condicional -> REPEAT { BlocoInstrucoes } UNTIL ( Condicao ) .)
+
+
+state 153
+
+    (36) Condicional -> WHILE ( Condicao ) DO { BlocoInstrucoes } .
+
+    DUMP            reduce using rule 36 (Condicional -> WHILE ( Condicao ) DO { BlocoInstrucoes } .)
+    PRINT           reduce using rule 36 (Condicional -> WHILE ( Condicao ) DO { BlocoInstrucoes } .)
+    PRINTA          reduce using rule 36 (Condicional -> WHILE ( Condicao ) DO { BlocoInstrucoes } .)
+    READ            reduce using rule 36 (Condicional -> WHILE ( Condicao ) DO { BlocoInstrucoes } .)
+    IF              reduce using rule 36 (Condicional -> WHILE ( Condicao ) DO { BlocoInstrucoes } .)
+    REPEAT          reduce using rule 36 (Condicional -> WHILE ( Condicao ) DO { BlocoInstrucoes } .)
+    WHILE           reduce using rule 36 (Condicional -> WHILE ( Condicao ) DO { BlocoInstrucoes } .)
+    id              reduce using rule 36 (Condicional -> WHILE ( Condicao ) DO { BlocoInstrucoes } .)
+    $end            reduce using rule 36 (Condicional -> WHILE ( Condicao ) DO { BlocoInstrucoes } .)
+    }               reduce using rule 36 (Condicional -> WHILE ( Condicao ) DO { BlocoInstrucoes } .)
+    RETURN          reduce using rule 36 (Condicional -> WHILE ( Condicao ) DO { BlocoInstrucoes } .)
+
+
+state 154
+
+    (14) DeclFun -> FUNCTION id ( ) { BlocoInstrucoes RETURN ExpRel ; } .
+
+    BEGIN           reduce using rule 14 (DeclFun -> FUNCTION id ( ) { BlocoInstrucoes RETURN ExpRel ; } .)
+    INT             reduce using rule 14 (DeclFun -> FUNCTION id ( ) { BlocoInstrucoes RETURN ExpRel ; } .)
+    FUNCTION        reduce using rule 14 (DeclFun -> FUNCTION id ( ) { BlocoInstrucoes RETURN ExpRel ; } .)
+
+
+state 155
+
+    (30) AtrArrayBi -> id [ number ] [ number ] = ExpA .
+    (52) ExpA -> ExpA . + Term
+    (53) ExpA -> ExpA . - Term
+
+    ;               reduce using rule 30 (AtrArrayBi -> id [ number ] [ number ] = ExpA .)
+    +               shift and go to state 58
+    -               shift and go to state 59
+
+
+state 156
+
+    (34) Condicional -> IF ( Condicao ) { BlocoInstrucoes } ELSE { . BlocoInstrucoes }
+    (4) BlocoInstrucoes -> . Instrucao
+    (5) BlocoInstrucoes -> . BlocoInstrucoes Instrucao
+    (15) Instrucao -> . DUMP
+    (16) Instrucao -> . PRINT ExpA ;
+    (17) Instrucao -> . PRINTA id ;
+    (18) Instrucao -> . READ id ;
+    (19) Instrucao -> . READ id [ number ] ;
+    (20) Instrucao -> . READ id [ id ] ;
+    (21) Instrucao -> . Atribuicao ;
+    (32) Instrucao -> . Condicional
+    (22) Atribuicao -> . AtrVar
+    (23) Atribuicao -> . AtrArray
+    (24) Atribuicao -> . AtrArrayVar
+    (25) Atribuicao -> . AtrArrayBi
+    (26) Atribuicao -> . AtrFun
+    (33) Condicional -> . IF ( Condicao ) { BlocoInstrucoes }
+    (34) Condicional -> . IF ( Condicao ) { BlocoInstrucoes } ELSE { BlocoInstrucoes }
+    (35) Condicional -> . REPEAT { BlocoInstrucoes } UNTIL ( Condicao )
+    (36) Condicional -> . WHILE ( Condicao ) DO { BlocoInstrucoes }
+    (27) AtrVar -> . id = ExpA
+    (28) AtrArray -> . id [ number ] = ExpA
+    (29) AtrArrayVar -> . id [ id ] = ExpA
+    (30) AtrArrayBi -> . id [ number ] [ number ] = ExpA
+    (31) AtrFun -> . id = id ( )
+
+    DUMP            shift and go to state 19
+    PRINT           shift and go to state 20
+    PRINTA          shift and go to state 21
+    READ            shift and go to state 23
+    IF              shift and go to state 31
+    REPEAT          shift and go to state 32
+    WHILE           shift and go to state 33
+    id              shift and go to state 22
+
+    BlocoInstrucoes                shift and go to state 157
+    Instrucao                      shift and go to state 18
+    Atribuicao                     shift and go to state 24
+    Condicional                    shift and go to state 25
+    AtrVar                         shift and go to state 26
+    AtrArray                       shift and go to state 27
+    AtrArrayVar                    shift and go to state 28
+    AtrArrayBi                     shift and go to state 29
+    AtrFun                         shift and go to state 30
+
+state 157
+
+    (34) Condicional -> IF ( Condicao ) { BlocoInstrucoes } ELSE { BlocoInstrucoes . }
+    (5) BlocoInstrucoes -> BlocoInstrucoes . Instrucao
+    (15) Instrucao -> . DUMP
+    (16) Instrucao -> . PRINT ExpA ;
+    (17) Instrucao -> . PRINTA id ;
+    (18) Instrucao -> . READ id ;
+    (19) Instrucao -> . READ id [ number ] ;
+    (20) Instrucao -> . READ id [ id ] ;
+    (21) Instrucao -> . Atribuicao ;
+    (32) Instrucao -> . Condicional
+    (22) Atribuicao -> . AtrVar
+    (23) Atribuicao -> . AtrArray
+    (24) Atribuicao -> . AtrArrayVar
+    (25) Atribuicao -> . AtrArrayBi
+    (26) Atribuicao -> . AtrFun
+    (33) Condicional -> . IF ( Condicao ) { BlocoInstrucoes }
+    (34) Condicional -> . IF ( Condicao ) { BlocoInstrucoes } ELSE { BlocoInstrucoes }
+    (35) Condicional -> . REPEAT { BlocoInstrucoes } UNTIL ( Condicao )
+    (36) Condicional -> . WHILE ( Condicao ) DO { BlocoInstrucoes }
+    (27) AtrVar -> . id = ExpA
+    (28) AtrArray -> . id [ number ] = ExpA
+    (29) AtrArrayVar -> . id [ id ] = ExpA
+    (30) AtrArrayBi -> . id [ number ] [ number ] = ExpA
+    (31) AtrFun -> . id = id ( )
+
+    }               shift and go to state 158
+    DUMP            shift and go to state 19
+    PRINT           shift and go to state 20
+    PRINTA          shift and go to state 21
+    READ            shift and go to state 23
+    IF              shift and go to state 31
+    REPEAT          shift and go to state 32
+    WHILE           shift and go to state 33
+    id              shift and go to state 22
+
+    Instrucao                      shift and go to state 37
+    Atribuicao                     shift and go to state 24
+    Condicional                    shift and go to state 25
+    AtrVar                         shift and go to state 26
+    AtrArray                       shift and go to state 27
+    AtrArrayVar                    shift and go to state 28
+    AtrArrayBi                     shift and go to state 29
+    AtrFun                         shift and go to state 30
+
+state 158
+
+    (34) Condicional -> IF ( Condicao ) { BlocoInstrucoes } ELSE { BlocoInstrucoes } .
+
+    DUMP            reduce using rule 34 (Condicional -> IF ( Condicao ) { BlocoInstrucoes } ELSE { BlocoInstrucoes } .)
+    PRINT           reduce using rule 34 (Condicional -> IF ( Condicao ) { BlocoInstrucoes } ELSE { BlocoInstrucoes } .)
+    PRINTA          reduce using rule 34 (Condicional -> IF ( Condicao ) { BlocoInstrucoes } ELSE { BlocoInstrucoes } .)
+    READ            reduce using rule 34 (Condicional -> IF ( Condicao ) { BlocoInstrucoes } ELSE { BlocoInstrucoes } .)
+    IF              reduce using rule 34 (Condicional -> IF ( Condicao ) { BlocoInstrucoes } ELSE { BlocoInstrucoes } .)
+    REPEAT          reduce using rule 34 (Condicional -> IF ( Condicao ) { BlocoInstrucoes } ELSE { BlocoInstrucoes } .)
+    WHILE           reduce using rule 34 (Condicional -> IF ( Condicao ) { BlocoInstrucoes } ELSE { BlocoInstrucoes } .)
+    id              reduce using rule 34 (Condicional -> IF ( Condicao ) { BlocoInstrucoes } ELSE { BlocoInstrucoes } .)
+    $end            reduce using rule 34 (Condicional -> IF ( Condicao ) { BlocoInstrucoes } ELSE { BlocoInstrucoes } .)
+    }               reduce using rule 34 (Condicional -> IF ( Condicao ) { BlocoInstrucoes } ELSE { BlocoInstrucoes } .)
+    RETURN          reduce using rule 34 (Condicional -> IF ( Condicao ) { BlocoInstrucoes } ELSE { BlocoInstrucoes } .)
+
+WARNING: 
+WARNING: Conflicts:
+WARNING: 
+WARNING: shift/reduce conflict for OR in state 73 resolved as shift
+WARNING: shift/reduce conflict for AND in state 74 resolved as shift
+WARNING: shift/reduce conflict for AND in state 120 resolved as shift
+WARNING: shift/reduce conflict for OR in state 121 resolved as shift

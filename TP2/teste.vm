@@ -13,3 +13,27 @@ int a=0; int b=1; function potencia(){print 1; return 33}; BEGIN print 2; a=pote
 int a=0; int b=1; int c; function potencia(){a=23; read b; print b; while(b<3)do{print b; b=b+1;} return b;} BEGIN if(2>1){print 23; c=potencia(); print c;}
 
 int a=1; int b[10]; BEGIN b[0] = 10; b[1] = 20 ; print b[1];
+
+
+
+int n ; int menor; int atual; BEGIN read n; repeat { read atual; if( atual < menor){ menor = atual;} n = n - 1; } until ( n > 0) print menor;
+
+
+int n; int lido; int menor = 10; BEGIN read n; while (n > 0) do { read lido; if(lido < menor){ menor = lido;} n = n - 1;} print menor;
+
+int n=0; int res=1; int atual=0; BEGIN read n; repeat {read atual; res = res * atual; n = n-1;} until (n>0) print res;
+
+int n=0; int res=1; int atual=0; BEGIN read n; repeat {read atual; res = res * atual; n = n-1;} until (n>0) print res;
+
+int a=0; int contar=0; int n=0; BEGIN read n; repeat {read a; if (a%2 != 0) {contar = contar +1; print a;} n = n-1; } until (n>0) print 111;
+
+int n; int i = 0; int a[10]; BEGIN read n; while(i<n) do {read a[i] ; i = i+1;}   n = n-1; while( n >= 0) do { print a[n]; n = n-1;} print 33;
+
+int n; int i = 0; int a[10]; BEGIN read n; while(i<n) do {read a[i]; print a[i]; i = i+1;} print 33;
+
+
+int n; int a[10];  BEGIN  read a[1]; print 33;
+
+
+int res=1; int b=0; int e=0; int a=0; function potencia(){read b; read e; while(e > 0) do { res = res * b; e = e-1;} return res;} BEGIN a=potencia(); print a;
+
